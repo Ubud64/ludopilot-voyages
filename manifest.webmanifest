@@ -1,0 +1,25 @@
+{
+  "name": "LudoPilot Voyages",
+  "short_name": "LudoPilot",
+  "description": "Itinéraires internationaux par étapes et écran chauffeur adapté.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef4f7",
+  "theme_color": "#102b44",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
