@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="LudoPilot">
 <meta name="description" content="LudoPilot Voyages, assistant de voyage international, GPS par étape et services proches.">
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./icon-180.png">
-<title>LudoPilot Voyages V1.7</title>
+<title>LudoPilot Voyages V1.8</title>
 <style>
 :root{color-scheme:light;--ink:#17364d;--muted:#627588;--bg:#eef4f7;--card:#fff;--blue:#086fab;--line:#dce5eb;--accent:#0d8c86;--red:#a93439}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.48 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;padding-bottom:calc(88px + env(safe-area-inset-bottom))}button,input,select,textarea{font:inherit}button{cursor:pointer}
@@ -18,10 +18,17 @@ label{display:block;font-size:13px;font-weight:750;margin:12px 0 5px}.field{disp
 nav{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:white;border-top:1px solid var(--line);padding:7px 4px calc(6px + env(safe-area-inset-bottom));z-index:10;box-shadow:0 -4px 14px #16446009}nav button{background:transparent;border:0;color:#627588;font-size:10.5px;font-weight:800;display:grid;justify-items:center;gap:2px;padding:5px 2px;border-radius:10px}nav button.active{background:#eaf4fa;color:var(--blue)}nav button .icon{font-size:22px;line-height:1.25}
 #toast{position:fixed;z-index:20;bottom:calc(92px + env(safe-area-inset-bottom));left:14px;right:14px;max-width:620px;margin:auto;background:#173b50;color:white;border-radius:11px;padding:11px 14px;text-align:center;display:none;box-shadow:0 6px 25px #0003}.suggestions{margin-top:3px;border:1px solid #cee0e8;background:#fff;border-radius:11px;overflow:hidden;box-shadow:0 5px 14px #16446017}.suggestions button{width:100%;text-align:left;background:#fff;color:var(--ink);border:0;border-bottom:1px solid var(--line);padding:11px 12px;line-height:1.35}.suggestions button:last-child{border-bottom:none}.suggestions .suggest-meta{font-size:11px;color:var(--muted)}.near-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.placebtn{min-height:82px;border:1px solid var(--line);border-radius:13px;padding:12px;background:white;color:var(--ink);text-align:center;font-weight:800;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}.placebtn .emoji{font-size:26px}.placebtn:disabled{cursor:wait}.placebtn.selected{border:3px solid var(--accent);padding:10px;background:#e4f7f2;color:#06665f;box-shadow:0 0 0 2px #c4eee6 inset}.placebtn.selected::after{content:'✓ Sélectionné';font-size:12px;font-weight:900;color:#056b64}.driver-place{text-align:center;font-size:clamp(26px,8vw,43px);overflow-wrap:anywhere;font-weight:900;margin:20px 0}.driver-translation{text-align:center;font-size:22px;font-weight:800;margin:12px 0}.driver-caption{text-align:center;letter-spacing:1px;color:var(--accent);font-size:12px;font-weight:850}.driver-address{text-align:center;color:var(--muted);overflow-wrap:anywhere}.questionbtn{text-align:left;width:100%;margin:5px 0;justify-content:flex-start;line-height:1.35;white-space:normal}.questionbtn.selected{background:#e4f7f2;border:2px solid var(--accent);color:#06665f}.questionbtn:disabled{opacity:.55}.question-tip{margin-top:10px;color:var(--muted);font-size:12px}.archive-title{font-size:16px;font-weight:800}.help-number{font-size:26px;font-weight:900}.help-red{background:#b62e39;color:white}.help-red .subtitle{color:#ffedf0}.link{color:var(--blue);word-wrap:anywhere}.line-check{display:flex;align-items:flex-start;gap:9px;font-size:13px}.line-check input{margin-top:4px;accent-color:var(--accent)}
 @media(max-width:365px){.grid2{grid-template-columns:1fr}.actions>.btn{min-width:110px}.top{padding-left:9px;padding-right:9px}.brand{font-size:18px}main{padding:13px 10px}}@media print{.top,nav,.actions,.btn{display:none!important}body{padding:0;background:white}.card{border:none}}
+/* V1.8 : listes compactes classées par distance, sans publicité */
+.near-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;margin:7px 0;padding:12px;border:1px solid var(--line);border-radius:11px;background:white;color:var(--ink)}
+.near-row strong{display:block;font-size:14px}.near-row small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.near-distance{flex-shrink:0;color:#087870;font-weight:800;font-size:13px}
+.help-select{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}.help-select button{padding:10px 7px;min-height:49px;border:1px solid var(--line);background:white;border-radius:10px;color:var(--ink);font-size:13px;font-weight:800}.help-select button.active{background:#e4f7f2;border:2px solid var(--accent);padding:9px 6px;color:#06665f}
+.help-emergency{background:#a8343c;color:#fff}.help-emergency h2,.help-emergency .subtitle{color:#fff}.help-emergency a{display:inline-flex;background:#fff;color:#a12c36;align-items:center;justify-content:center;text-decoration:none;padding:10px 12px;min-height:43px;border-radius:10px;font-weight:900;margin:4px 5px 4px 0}
+.help-phrase{border-bottom:1px solid var(--line);padding:10px 0}.help-phrase strong{font-size:16px;display:block}.help-phrase small{color:var(--muted);font-size:12px}
+details > summary{cursor:pointer;font-weight:800;padding:8px 0}
 </style>
 </head>
 <body>
-<header class="top"><div class="top-line"><div><div class="brand">🧭 LudoPilot <span style="color:#66d7cf">Voyages</span></div><div class="subbrand">V1.7 · SIMPLE ET ÉCONOMIQUE</div></div><div class="top-actions"><button id="helpTop" class="headbtn" aria-label="Aide-moi">🆘</button><button id="settingsTop" class="headbtn" aria-label="Réglages">⚙️</button></div></div></header>
+<header class="top"><div class="top-line"><div><div class="brand">🧭 LudoPilot <span style="color:#66d7cf">Voyages</span></div><div class="subbrand">V1.8 · SIMPLE ET ÉCONOMIQUE</div></div><div class="top-actions"><button id="helpTop" class="headbtn" aria-label="Aide-moi">🆘</button><button id="settingsTop" class="headbtn" aria-label="Réglages">⚙️</button></div></div></header>
 <main id="app"></main>
 <nav id="tabs" aria-label="Navigation"><button data-tab="voyage"><span class="icon">🧭</span>Voyage</button><button data-tab="etapes"><span class="icon">🗺️</span>Étapes</button><button data-tab="archives"><span class="icon">📂</span>Archives</button><button data-tab="proche"><span class="icon">📍</span>Proche</button><button data-tab="aide"><span class="icon">🆘</span>Aide-moi</button></nav>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -31,7 +38,7 @@ nav{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:re
 // Les données de V1 sont conservées : ne jamais renommer cette clé.
 const STORE='ludopilot-voyages-v1', PREF='ludopilot-voyages-v11-prefs';
 const MODES={walk:'🚶 Marche',bicycle:'🚲 Vélo',motorbike:'🛵 Moto-taxi',tricycle:'🛺 Tricycle',tuktuk:'🛺 Tuk-tuk',taxi:'🚕 Taxi',grab:'🚙 Grab',jeepney:'🚌 Jeepney',minibus:'🚐 Minibus',bus:'🚌 Bus',coach:'🚌 Autocar',van:'🚐 Van',train:'🚆 Train',metro:'🚇 Métro',ferry:'⛴️ Ferry',boat:'🚤 Bateau',plane:'✈️ Avion',other:'📍 Autre'};
-const COUNTRY={PH:{label:'Philippines',currency:'PHP',emergencies:[['Urgences (police, secours, ambulance)','911']]},TH:{label:'Thaïlande',currency:'THB',emergencies:[['Police','191'],['Ambulance','1669'],['Pompiers','199'],['Police touristique','1155']]},ID:{label:'Indonésie',currency:'IDR',emergencies:[['Police','110'],['Ambulance','119'],['Numéro d’urgence général','112']]},FR:{label:'France',currency:'EUR',emergencies:[['Urgences européennes','112'],['SAMU','15'],['Police','17'],['Pompiers','18']]},ES:{label:'Espagne',currency:'EUR',emergencies:[['Urgences','112']]},MU:{label:'Île Maurice',currency:'MUR',emergencies:[['Police','999'],['SAMU','114'],['Pompiers','115']]},OTHER:{label:'Autre pays',emergencies:[]}};
+const COUNTRY={PH:{label:'Philippines',currency:'PHP',emergencies:[['Urgences (police, secours, ambulance)','911']]},TH:{label:'Thaïlande',currency:'THB',emergencies:[['Police','191'],['Ambulance','1669'],['Pompiers','199'],['Police touristique','1155']]},ID:{label:'Indonésie',currency:'IDR',emergencies:[['Police','110'],['Ambulance','119'],['Numéro d’urgence général','112']]},FR:{label:'France',currency:'EUR',emergencies:[['Urgences européennes','112'],['SAMU','15'],['Police','17'],['Pompiers','18']]},ES:{label:'Espagne',currency:'EUR',emergencies:[['Urgences','112']]},MU:{label:'Île Maurice',currency:'MUR',emergencies:[['Police','999'],['SAMU','114'],['Pompiers','115']]},DE:{label:'Allemagne',currency:'EUR',emergencies:[['Urgences / pompiers','112'],['Police','110']]},JP:{label:'Japon',currency:'JPY',emergencies:[['Ambulance / pompiers','119'],['Police','110']]},KR:{label:'Corée du Sud',currency:'KRW',emergencies:[['Ambulance / pompiers','119'],['Police','112']]},VN:{label:'Vietnam',currency:'VND',emergencies:[['Police','113'],['Pompiers','114'],['Ambulance','115']]},OTHER:{label:'Pays non répertorié',emergencies:[]}};
 const NEAR=[['bank','🏦','Banques et DAB','ATM bank'],['change','💱','Bureaux de change','money exchange'],['supermarket','🛒','Supermarchés','supermarket'],['food','🍜','Restaurants','restaurant'],['streetfood','🥟','Street food','street food'],['nightmarket','🌙','Marchés de nuit','night market'],['market','🥭','Marchés locaux','market'],['massage','💆','Massages','massage'],['phone','📱','Téléphonie / SIM','mobile phone shop'],['laundry','🧺','Laveries','laundry'],['pharmacy','💊','Pharmacies','pharmacy'],['taxi','🚕','Transports','taxi stand']];
 // Questions courantes adaptées à chaque thème, sans requête API.
 const NEAR_QUESTIONS={
@@ -99,14 +106,14 @@ const active=()=>state.trips.find(t=>t.id===state.activeId)||null;
 function save(){try{localStorage.setItem(STORE,JSON.stringify({trips:state.trips,activeId:state.activeId,worker:state.worker,driverLang:state.driverLang}));localStorage.setItem(PREF,JSON.stringify({form:state.form,country:state.country,nearPlace:state.nearPlace,paidAllowed:state.paidAllowed}));return true;}catch(_){toast('Stockage indisponible. Exporte tes voyages depuis Réglages.');return false;}}
 function toast(s){const t=byId('toast');t.textContent=s;t.style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.style.display='none',5000);}
 function message(s,type='status'){state.notice=s;state.error=type==='error'?s:'';render();}
-function setTab(tab){if(!['voyage','etapes','archives','proche','aide','reglages','chauffeur','question'].includes(tab))return;state.tab=tab;render();window.scrollTo(0,0);}
+function setTab(tab){if(!['voyage','etapes','archives','proche','aide','reglages','chauffeur','question'].includes(tab))return;state.tab=tab;render();window.scrollTo(0,0);if(tab==='aide')loadSafetyFromGps();}
 function field(id,label,value,placeholder='',type='text'){return `<label for="${id}">${esc(label)}</label><input class="field" id="${id}" name="${id}" type="${type}" value="${esc(value)}" placeholder="${esc(placeholder)}" autocomplete="off">${['origin','destination','via'].includes(id)?`<div class="suggestions" style="display:none" id="suggest-${id}" aria-live="polite"></div>`:''}`;}
 function header(eyebrow,title,sub=''){return `<div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(title)}</h1>${sub?`<p class="subtitle">${esc(sub)}</p>`:''}`;}
 function chooser(){return state.trips.length?`<label for="tripChooser">Voyage sélectionné</label><select class="field" id="tripChooser">${state.trips.map(t=>`<option value="${esc(t.id)}" ${t.id===state.activeId?'selected':''}>${esc(t.name||t.origin+' → '+t.destination)}</option>`).join('')}</select>`:'';}
 function countries(){return `<label for="country">🌐 Pays dans lequel tu voyages</label><select id="country" class="field">${Object.entries(COUNTRY).map(([k,v])=>`<option value="${k}" ${k===state.country?'selected':''}>${v.label}</option>`).join('')}</select>`;}
 function normalizeSegment(s,i){return {index:i+1,from:String(s?.from||''),to:String(s?.to||''),mode:String(s?.mode||'other'),modeLabel:String(s?.modeLabel||MODES[s?.mode]||'Transport'),fromPlaceName:String(s?.fromPlaceName||''),toPlaceName:String(s?.toPlaceName||''),toAddress:String(s?.toAddress||''),toCity:String(s?.toCity||''),toCountry:String(s?.toCountry||''),fromLatitude:validPoint(s?.fromLatitude,s?.fromLongitude)?Number(s.fromLatitude):null,fromLongitude:validPoint(s?.fromLatitude,s?.fromLongitude)?Number(s.fromLongitude):null,toLatitude:validPoint(s?.toLatitude,s?.toLongitude)?Number(s.toLatitude):null,toLongitude:validPoint(s?.toLatitude,s?.toLongitude)?Number(s.toLongitude):null,service:String(s?.service||s?.serviceDescription||''),notes:String(s?.notes||''),facts:Array.isArray(s?.facts)?s.facts.slice(0,10).map(f=>typeof f==='object'?{text:String(f.text||''),sourceURL:String(f.sourceURL||'')}: {text:String(f)}):[],questions:Array.isArray(s?.questions)?s.questions.slice(0,5).map(String):[]};}
 function newTrip(d){return {id:uid(),created:new Date().toISOString(),name:d.name||'',origin:d.origin,destination:d.destination,via:d.via||'',dateTime:d.dateTime||'',preference:d.preference||'surface',summary:d.summary||'',price:d.price||'',duration:d.duration||'',warnings:d.warnings||[],segments:d.segments||[],currentIndex:0,complete:false};}
-function buildVoyage(){const t=active(),f=state.form;return header('Préparer · V1.7','Où veux-tu aller ?','Tes adresses restent enregistrées même après une recherche.')+`<section class="card">${field('origin','📍 Départ exact',f.origin,'Hôtel, port, aéroport, ville…')}${field('destination','🏁 Arrivée exacte',f.destination,'Ex. Siquijor ou Chiang Mai')}${field('via','↪ Passage obligatoire (facultatif)',f.via,'Ex. Cebu, Bangkok')}<div class="grid2"><div>${field('dateTime','📅 Date locale',f.dateTime,'','datetime-local')}</div><div><label for="preference">Mode</label><select class="field" id="preference"><option value="surface" ${f.preference==='surface'?'selected':''}>Sans avion</option><option value="air" ${f.preference==='air'?'selected':''}>Avec avion</option></select></div></div><p class="smallprint">💡 Suggestions de lieux gratuites quand tu écris au moins 4 caractères. Vérifie toujours la bonne adresse.</p><div class="actions"><button class="btn secondary" id="createJourney">➕ Créer manuellement</button><button class="btn teal" id="searchJourney" ${state.busy?'disabled':''}>${state.busy?'⏳ Recherche…':'🔎 Recherche intelligente'}</button></div>${state.busy?`<div class="status" role="status">⏳ Recherche en cours. Laisse cet écran ouvert. Cela peut prendre jusqu'à quelques minutes.</div>`:''}${state.notice?`<div class="${state.error?'callout error':'status'}" role="status">${esc(state.notice)}</div>`:''}<div class="callout warning">La recherche intelligente utilise l’ancien moteur API et peut consommer tes crédits. Les autres fonctions sont gratuites. Active-la dans Réglages seulement si tu le souhaites.</div></section>${t?`<section class="card">${chooser()}<h2 style="margin-top:12px">${esc(t.origin)} → ${esc(t.destination)}</h2><p class="subtitle">${t.segments?.length||0} segments · ${esc(t.duration||'Durée à vérifier')} · ${t.price?moneyHtml(t.price):'Prix à vérifier'}</p><button class="btn wide" data-tab="etapes">Voir cet itinéraire →</button></section>`:''}<p class="smallprint">Vérifie les horaires et tarifs des transporteurs : aucun trajet aérien ou maritime n'est confirmé automatiquement à la réservation.</p>`;}
+function buildVoyage(){const t=active(),f=state.form;return header('Préparer · V1.8','Où veux-tu aller ?','Tes adresses restent enregistrées même après une recherche.')+`<section class="card">${field('origin','📍 Départ exact',f.origin,'Hôtel, port, aéroport, ville…')}${field('destination','🏁 Arrivée exacte',f.destination,'Ex. Siquijor ou Chiang Mai')}${field('via','↪ Passage obligatoire (facultatif)',f.via,'Ex. Cebu, Bangkok')}<div class="grid2"><div>${field('dateTime','📅 Date locale',f.dateTime,'','datetime-local')}</div><div><label for="preference">Mode</label><select class="field" id="preference"><option value="surface" ${f.preference==='surface'?'selected':''}>Sans avion</option><option value="air" ${f.preference==='air'?'selected':''}>Avec avion</option></select></div></div><p class="smallprint">💡 Suggestions de lieux gratuites quand tu écris au moins 4 caractères. Vérifie toujours la bonne adresse.</p><div class="actions"><button class="btn secondary" id="createJourney">➕ Créer manuellement</button><button class="btn teal" id="searchJourney" ${state.busy?'disabled':''}>${state.busy?'⏳ Recherche…':'🔎 Recherche intelligente'}</button></div>${state.busy?`<div class="status" role="status">⏳ Recherche en cours. Laisse cet écran ouvert. Cela peut prendre jusqu'à quelques minutes.</div>`:''}${state.notice?`<div class="${state.error?'callout error':'status'}" role="status">${esc(state.notice)}</div>`:''}<div class="callout warning">La recherche intelligente utilise l’ancien moteur API et peut consommer tes crédits. Les autres fonctions sont gratuites. Active-la dans Réglages seulement si tu le souhaites.</div></section>${t?`<section class="card">${chooser()}<h2 style="margin-top:12px">${esc(t.origin)} → ${esc(t.destination)}</h2><p class="subtitle">${t.segments?.length||0} segments · ${esc(t.duration||'Durée à vérifier')} · ${t.price?moneyHtml(t.price):'Prix à vérifier'}</p><button class="btn wide" data-tab="etapes">Voir cet itinéraire →</button></section>`:''}<p class="smallprint">Vérifie les horaires et tarifs des transporteurs : aucun trajet aérien ou maritime n'est confirmé automatiquement à la réservation.</p>`;}
 function buildEtapes(){const t=active();if(!t)return header('Navigation','Mes étapes')+`<section class="card"><p>Aucun voyage sélectionné.</p><button class="btn" data-tab="voyage">Préparer mon voyage</button></section>`;const ss=Array.isArray(t.segments)?t.segments:[],idx=Math.min(Math.max(0,t.currentIndex||0),Math.max(0,ss.length-1));return header('Navigation','Étape par étape',`${t.origin} → ${t.destination}`)+chooser()+`<section class="card"><h2>${esc(t.name||t.origin+' → '+t.destination)}</h2>${t.summary?`<p>${moneyHtml(t.summary)}</p>`:''}<div class="row"><span class="pill">${ss.length} segments</span><span class="meta">${esc(t.duration||'Durée à confirmer')}</span></div>${t.price?`<p class="meta">Coût estimé : ${moneyHtml(t.price)}</p>`:''}${Array.isArray(t.warnings)&&t.warnings.length?`<div class="callout warning">${t.warnings.map(moneyHtml).join('<div class="divider"></div>')}</div>`:''}${ss.length?ss.map((s,i)=>`<article class="step ${idx===i?'active':''}"><div class="row"><span class="pill">${i+1} / ${ss.length}</span><span class="meta">${esc(MODES[s.mode]||s.modeLabel||'Transport')}</span></div><div class="step-title">${esc(s.from)} → ${esc(s.to)}</div>${s.service?`<p class="meta">${moneyHtml(s.service)}</p>`:''}${s.notes?`<p class="meta">${moneyHtml(s.notes)}</p>`:''}${Array.isArray(s.facts)&&s.facts.length?`<ul class="facts">${s.facts.map(x=>`<li>${moneyHtml(x.text||x)}</li>`).join('')}</ul>`:''}<div class="actions"><button class="btn small ${idx===i?'teal':'ghost'}" data-choose="${i}">${idx===i?'✓ Active':'Choisir'}</button><button class="btn small secondary" data-map="${i}">🧭 GPS</button><button class="btn small secondary" data-driver="${i}">🚕 Chauffeur</button><button class="btn small ghost" data-question="${i}">💬 Questions</button></div>${['ferry','boat','plane'].includes(s.mode)?`<p class="smallprint">Pour un ${s.mode==='plane'?'vol':'bateau'}, le GPS ouvre le lieu d'arrivée sans inventer de route terrestre.</p>`:''}</article>`).join(''):`<div class="callout">Aucune étape pour le moment. Ajoute chaque véhicule ou correspondance séparément.</div>`}<p class="smallprint" id="fxInfo">💶 Conversions indicatives en euros, hors frais bancaires.</p>${ss.length?`<div class="actions"><button class="btn ghost" id="prevSegment" ${idx===0?'disabled':''}>← Précédente</button><button class="btn teal" id="nextSegment">${idx===ss.length-1?'✓ Terminé':'Suivante →'}</button></div>`:''}</section><section class="card"><h2>➕ Ajouter une étape</h2><p class="subtitle">Un véhicule = une étape. Un changement de ferry, taxi ou bus = nouvelle étape.</p>${field('segFrom','Départ',ss.length?ss.at(-1).to:t.origin,'Lieu précis')}${field('segTo','Arrivée','','Terminal, port, hôtel…')}<label for="segMode">Transport</label><select class="field" id="segMode">${Object.entries(MODES).map(([v,s])=>`<option value="${v}" ${v==='taxi'?'selected':''}>${s}</option>`).join('')}</select>${field('segService','Ligne ou service (facultatif)','','Ex. ferry, Grab, numéro du vol')}<label for="segNotes">Notes pratiques</label><textarea class="field" id="segNotes" placeholder="Prix, horaires, repères…"></textarea><button class="btn teal wide" style="margin-top:10px" id="addSegment">Enregistrer cette étape</button></section><div class="actions"><button class="btn secondary" id="export">⬇️ Exporter mes voyages</button><button class="btn ghost" data-tab="archives">📂 Archives</button></div>`;}
 function buildArchives(){const trips=state.trips;return header('Stockage local','Mes archives','Prépare tes voyages à l’avance et retrouve-les sur ce téléphone.')+`<section class="card"><div class="row"><h2 style="margin:0">Voyages sauvegardés</h2><span class="pill">${trips.length}</span></div>${!trips.length?`<p class="subtitle" style="margin-top:13px">Aucun voyage pour le moment.</p>`:trips.map(t=>`<div class="step"><div class="archive-title">${esc(t.name||t.origin+' → '+t.destination)}</div><p class="meta">${esc(t.origin)} → ${esc(t.destination)} · ${t.segments?.length||0} segments${t.dateTime?' · '+esc(t.dateTime.replace('T',' ')):''}</p><div class="actions"><button class="btn small teal" data-load="${esc(t.id)}">Ouvrir</button><button class="btn small ghost" data-rename="${esc(t.id)}">Renommer</button><button class="btn small secondary" data-clone="${esc(t.id)}">Dupliquer</button></div></div>`).join('')}</section><section class="card"><h2>📦 Sauvegarde et transfert</h2><p class="subtitle">Les archives restent sur ton appareil. Pour changer d'iPhone, exporte le fichier JSON, puis importe-le sur le nouvel appareil.</p><div class="actions"><button class="btn secondary" id="export">⬇️ Exporter</button><button class="btn ghost" id="importButton">⬆️ Importer</button></div><input type="file" id="importFile" accept=".json,application/json" hidden></section>`;}
 function geoLabel(){return state.gps?`Position GPS : ${state.gps.lat.toFixed(5)}, ${state.gps.lon.toFixed(5)} (précision environ ${Math.round(state.gps.accuracy)} m)`:'Position GPS non demandée';}
@@ -114,60 +121,212 @@ function nearLocation(){const g=state.gps;if(!g||!validPoint(g.lat,g.lon)||!Numb
 async function reverseGpsPosition(lat,lon){const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),8500);try{const url='https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&zoom=14&accept-language=fr&lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon);const response=await fetch(url,{headers:{Accept:'application/json'},signal:ac.signal});if(!response.ok)throw Error('Géocodage indisponible');const data=await response.json();const a=data?.address||{};const area=a.suburb||a.neighbourhood||a.city_district||a.borough||'';const city=a.city||a.town||a.municipality||a.village||a.county||'';const country=a.country||'';const parts=[area,city,country].filter(Boolean).filter((v,i,all)=>all.findIndex(w=>w.toLowerCase()===v.toLowerCase())===i);if(!city||!country)throw Error('Ville non déterminée');return parts.join(', ');}finally{clearTimeout(timer);}}
 
 async function detectCountry(lat,lon){
- try{const u='https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&zoom=6&lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon);
- const a=await fetch(u,{headers:{Accept:'application/json'}});if(!a.ok)return;
- const j=await a.json(),code=String(j?.address?.country_code||'').toUpperCase();
- if(COUNTRY[code]&&state.country!==code){state.country=code;save();}
- }catch(_){ /* Le GPS reste utilisable sans géocodage. */ }
+ try{
+  const u='https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&zoom=10&accept-language=fr&lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon);
+  const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),8500);
+  let data;try{const r=await fetch(u,{headers:{Accept:'application/json'},signal:ac.signal});if(!r.ok)throw Error('Pays non disponible');data=await r.json();}finally{clearTimeout(timer);}
+  const a=data?.address||{},code=String(a.country_code||'').toUpperCase();
+  if(!code)return;
+  state.country=COUNTRY[code]?code:'OTHER';save();
+  safety.verified=true;safety.countryName=String(a.country||'').slice(0,85);safety.city=String(a.city||a.town||a.municipality||a.village||a.county||'').slice(0,85);
+  saveSafety();if(state.tab==='aide')render();
+ }catch(_){if(state.tab==='aide')render();}
 }
+
 function buildProche(){return header('Gratuit · GPS','Proche de moi','Choisis simplement ce que tu cherches. Ta position est récupérée automatiquement.')+`<section class="card"><h2>Que recherches-tu ?</h2><div class="near-grid">${NEAR.map(([k,e,label])=>`<button type="button" class="placebtn ${state.selectedNear===k?'selected':''}" data-near="${k}" aria-pressed="${state.selectedNear===k?'true':'false'}" ${state.gpsBusy?'disabled':''}><span class="emoji">${e}</span>${esc(label)}</button>`).join('')}</div></section>${state.selectedNear?buildNearResult():''}`;}
-// Supermarchés uniquement : lieux cartographiés autour du GPS, triés par distance directe.
-// Les autres catégories continuent à s'ouvrir dans Google Maps comme en V1.6.
-let nearestSupermarkets=[],nearestSupermarketsLoading=false,nearestSupermarketsError=false;
-function buildNearestSupermarkets(){
- if(nearestSupermarketsLoading)return '<p class="smallprint">🔎 Recherche des supermarchés proches…</p>';
- if(!nearestSupermarkets.length)return '<p class="smallprint">'+(nearestSupermarketsError?'Liste de proximité indisponible. Utilise Google Maps ci-dessous.':'Aucun supermarché répertorié à proximité. Essaie Google Maps ci-dessous.')+'</p>';
- return '<h3>📍 Les plus proches</h3><div class="smallprint" style="margin-bottom:8px">Distances approximatives à vol d’oiseau.</div>'+nearestSupermarkets.slice(0,8).map((shop,i)=>`<button type="button" class="btn ghost questionbtn" data-nearest-supermarket="${i}"><strong>${esc(shop.name)}</strong><span style="float:right;color:#627588">${shop.distance<1000?Math.round(shop.distance/10)*10+' m':(shop.distance/1000).toFixed(1).replace('.',',')+' km'}</span></button>`).join('')+'<p class="smallprint">Données cartographiques © OpenStreetMap.</p>';
-}
+// V1.8 : toutes les rubriques utilisent une liste de lieux géolocalisés,
+// classés du plus proche au plus éloigné. Google Maps sert à l'itinéraire.
+const PLACE_TAGS={
+ bank:['["amenity"~"^(bank|atm)$"]'],
+ change:['["amenity"="bureau_de_change"]'],
+ supermarket:['["shop"~"^(supermarket|grocery)$"]'],
+ food:['["amenity"="restaurant"]'],
+ streetfood:['["amenity"~"^(fast_food|food_court)$"]'],
+ nightmarket:['["amenity"="marketplace"]["name"~"night|nuit|malam|nocturn",i]','["name"~"night market|pasar malam|night bazaar",i]'],
+ market:['["amenity"="marketplace"]','["shop"~"^(greengrocer|farm)$"]'],
+ massage:['["shop"="massage"]','["leisure"="spa"]'],
+ phone:['["shop"~"^(mobile_phone|telecommunication)$"]'],
+ laundry:['["shop"~"^(laundry|dry_cleaning)$"]'],
+ pharmacy:['["amenity"="pharmacy"]','["healthcare"="pharmacy"]'],
+ taxi:['["amenity"~"^(taxi|bus_station|ferry_terminal)$"]','["highway"="bus_stop"]'],
+ hospital:['["amenity"="hospital"]','["healthcare"="hospital"]'],
+ clinic:['["amenity"="clinic"]','["healthcare"="clinic"]'],
+ doctor:['["amenity"="doctors"]','["healthcare"="doctor"]'],
+ police:['["amenity"="police"]']
+};
+const SAFETY_TABS=[['hospital','🏥','Hôpitaux'],['clinic','🚑','Cliniques'],['doctor','🩺','Médecins'],['pharmacy','💊','Pharmacies'],['police','👮','Police']];
+const PLACE_SEARCH_SERVERS=['https://overpass.kumi.systems/api/interpreter?data=','https://overpass-api.de/api/interpreter?data=','https://overpass.private.coffee/api/interpreter?data='];
+let nearItems=[],nearLoading=false,nearError=false,nearRequestSerial=0;
+const SAFETY_STORAGE='ludopilot-voyages-safety-v18';
+const safety={busy:false,loading:false,error:'',verified:false,city:'',countryName:'',tab:'hospital',services:{},position:null,storedAt:0};
+try{const c=JSON.parse(localStorage.getItem(SAFETY_STORAGE)||'null');if(c&&c.storedAt&&Date.now()-c.storedAt<30*86400000){
+ safety.city=c.city||'';safety.countryName=c.countryName||'';safety.services=c.services||{};safety.position=c.position||null;safety.storedAt=c.storedAt;
+ if(COUNTRY[c.country])state.country=c.country;
+}}catch(_){ }
+function saveSafety(){try{localStorage.setItem(SAFETY_STORAGE,JSON.stringify({country:state.country,city:safety.city,countryName:safety.countryName,services:safety.services,position:safety.position,storedAt:Date.now()}));safety.storedAt=Date.now();}catch(_){ }}
 function distanceMeters(lat1,lon1,lat2,lon2){
- const toRad=n=>n*Math.PI/180,dLat=toRad(lat2-lat1),dLon=toRad(lon2-lon1);
- const h=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+ const rad=n=>n*Math.PI/180,dlat=rad(lat2-lat1),dlon=rad(lon2-lon1);
+ const h=Math.sin(dlat/2)**2+Math.cos(rad(lat1))*Math.cos(rad(lat2))*Math.sin(dlon/2)**2;
  return 12742000*Math.asin(Math.min(1,Math.sqrt(h)));
 }
-async function loadNearestSupermarkets(serial,lat,lon){
- const q='[out:json][timeout:12];nwr(around:2500,'+lat.toFixed(6)+','+lon.toFixed(6)+')["shop"~"^(supermarket|grocery)$"];out center 90;';
- const urls=['https://overpass.kumi.systems/api/interpreter?data=','https://overpass-api.de/api/interpreter?data='];
- let stores=[];
- for(const base of urls){
-  const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),9000);
-  try{
-   const response=await fetch(base+encodeURIComponent(q),{signal:ac.signal});
-   if(!response.ok)throw Error('Recherche indisponible');
-   const data=await response.json();if(!Array.isArray(data.elements))throw Error('Liste non disponible');
-   const seen=new Set();
-   stores=data.elements.map(p=>{
-    const name=String(p.tags?.name||p.tags?.['name:en']||'').trim();
-    const a=Number(p.lat??p.center?.lat),b=Number(p.lon??p.center?.lon);
-    return {name,lat:a,lon:b,distance:distanceMeters(lat,lon,a,b)};
-   }).filter(p=>p.name&&validPoint(p.lat,p.lon)&&Number.isFinite(p.distance)&&p.distance<=2600)
-    .sort((a,b)=>a.distance-b.distance).filter(p=>{
-     const key=p.name.toLocaleLowerCase()+'|'+p.lat.toFixed(3)+'|'+p.lon.toFixed(3);
-     if(seen.has(key))return false;seen.add(key);return true;
-    }).slice(0,12);
-   break;
-  }catch(_){ /* Un serveur public peut être temporairement indisponible. */ }
-  finally{clearTimeout(timer);}
+function distanceLabel(d){return d<1000?Math.max(10,Math.round(d/10)*10)+' m':(d/1000).toFixed(1).replace('.',',')+' km';}
+function queriesForKeys(keys,lat,lon,radius){
+ const center=radius+','+lat.toFixed(6)+','+lon.toFixed(6);
+ return '[out:json][timeout:13];('+keys.flatMap(k=>(PLACE_TAGS[k]||[]).map(t=>'nwr(around:'+center+')'+t+';')).join('')+');out center 450;';
+}
+function osmPlaces(elements,lat,lon,radius){
+ const seen=new Set();return elements.map(el=>{
+  const a=Number(el.lat??el.center?.lat),b=Number(el.lon??el.center?.lon);
+  const name=String(el.tags?.['name:fr']||el.tags?.name||el.tags?.['name:en']||el.tags?.brand||'').trim();
+  if(!name||!validPoint(a,b))return null;
+  const distance=distanceMeters(lat,lon,a,b);
+  if(distance>radius+200)return null;
+  return {name,lat:a,lon:b,distance};
+ }).filter(Boolean).sort((a,b)=>a.distance-b.distance).filter(x=>{
+  const k=x.name.toLocaleLowerCase()+'|'+x.lat.toFixed(4)+'|'+x.lon.toFixed(4);
+  if(seen.has(k))return false;seen.add(k);return true;
+ });
+}
+async function findOsmPlaces(keys,lat,lon,radius=3000){
+ const q=queriesForKeys(keys,lat,lon,radius);
+ for(const base of PLACE_SEARCH_SERVERS){
+  const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),11000);
+  try{const r=await fetch(base+encodeURIComponent(q),{signal:ac.signal});if(!r.ok)throw Error('Service cartographique indisponible');
+   const j=await r.json();if(!Array.isArray(j.elements))throw Error('Réponse invalide');return osmPlaces(j.elements,lat,lon,radius);
+  }catch(_){/* Essayer un autre serveur, sans masquer l'échec final. */}finally{clearTimeout(timer);}
  }
- if(serial!==nearRequestSerial||state.selectedNear!=='supermarket')return;
- nearestSupermarkets=stores;nearestSupermarketsLoading=false;nearestSupermarketsError=!stores.length;
- render();
+ throw Error('Recherche locale indisponible');
 }
-function supermarketWalkingUrl(s){
- const p=nearLocation();if(!p||!s)return null;
- return 'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(p.lat+','+p.lon)+'&destination='+encodeURIComponent(s.lat+','+s.lon)+'&travelmode=walking';
+function routeToPlace(place,mode='walking'){
+ const loc=state.gps;if(!loc||!place||!validPoint(place.lat,place.lon))return null;
+ return 'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(loc.lat+','+loc.lon)+'&destination='+encodeURIComponent(place.lat+','+place.lon)+'&travelmode='+mode;
 }
-function buildNearResult(){const item=NEAR.find(n=>n[0]===state.selectedNear);if(!item)return '';const place=nearLocation();return `<section class="card" id="nearResult" aria-live="polite"><h2>${item[1]} ${esc(item[2])}</h2>${state.gpsBusy?'<p class="callout" role="status">📍 Localisation en cours, ouverture de la carte…</p>':state.gpsError?`<div class="callout error" role="alert">${esc(state.gpsError)}</div><button class="btn teal wide" id="retryNear">Réessayer la recherche</button>`:place?'<p class="smallprint">📍 Recherche autour de ta position actuelle.</p>':'<p class="smallprint">Choisis ce thème pour ouvrir les résultats proches de toi.</p>'}${item[0]==='supermarket'&&place&&!state.gpsBusy?buildNearestSupermarkets():''}${place&&!state.gpsBusy?`<div class="actions"><button class="btn teal" id="openNearMap">🗺️ Revoir les résultats sur Google Maps</button><button class="btn secondary" id="openNearApple">Plans iPhone</button></div>`:''}<h3 style="margin-top:15px">💬 Questions utiles pour ChatGPT</h3>${(NEAR_QUESTIONS[item[0]]||[]).slice(0,4).map((q,i)=>`<button type="button" class="btn ghost questionbtn" data-near-suggest="${i}" ${place&&!state.gpsBusy?'':'disabled'}>💬 ${esc(q)}</button>`).join('')}<button class="btn secondary wide" id="nearQuestion" ${place&&!state.gpsBusy?'':'disabled'}>✍️ Ma question libre</button></section>`;}
-function buildAide(){const c=COUNTRY[state.country];return header('Urgences et assistance','🆘 Aide-moi','Cette fiche reste disponible depuis l’écran d’accueil, même sans créer de voyage.')+`<section class="card help-red"><h2>En cas d'urgence</h2><p class="subtitle">Appelle les secours locaux. Ne dépends pas de ChatGPT en cas d'urgence réelle.</p>${countries()}<div class="actions"><button class="btn secondary" id="getGPS">📍 Afficher ma position</button><button class="btn ghost" id="shareGPS">📋 Copier position</button></div><p class="smallprint" id="gpsState" style="color:white">${esc(geoLabel())}</p><div class="actions"><button class="btn secondary" id="showGPSmap">🗺️ Voir ma position sur la carte</button></div></section><section class="card"><h2>📞 Numéros d'urgence · ${esc(c.label)}</h2>${c.emergencies.length?c.emergencies.map(([s,n])=>`<div class="step"><div class="row"><div><div class="smallprint">${esc(s)}</div><div class="help-number">${esc(n)}</div></div><a class="btn danger" href="tel:${encodeURIComponent(n)}">📞 Appeler</a></div></div>`).join(''):`<div class="callout warning">Numéros non renseignés pour ce pays. Vérifie-les auprès des autorités locales avant le départ.</div>`}<p class="smallprint">Les numéros peuvent changer et certains appels exigent un réseau mobile. Vérifie les consignes locales à l'arrivée. Le GPS dépend de l'autorisation et du signal.</p></section>`;}
+function nearbyList(items,kind){return items.slice(0,10).map((p,i)=>`<div><button type="button" class="near-row" data-place-route="${kind}:${i}"><span><strong>${esc(p.name)}</strong><small>🧭 Itinéraire à pied</small></span><span class="near-distance">${distanceLabel(p.distance)}</span></button>${kind==='safety'&&p.phone?`<a href="tel:${encodeURIComponent(p.phone.replace(/[^+0-9]/g,''))}" class="btn small secondary" style="margin:0 0 9px 8px">📞 ${esc(p.phone)}</a>`:''}</div>`).join('');}
+function buildNearResult(){const item=NEAR.find(x=>x[0]===state.selectedNear);if(!item)return '';
+ const loc=nearLocation();return `<section class="card" id="nearResult"><h2>${item[1]} ${esc(item[2])}</h2>`+
+ (state.gpsBusy||nearLoading?'<p class="subtitle">📍 Recherche des adresses proches…</p>':state.gpsError?`<p class="callout error">${esc(state.gpsError)}</p><button class="btn secondary wide" id="retryNear">Réessayer</button>`:
+ nearItems.length?nearbyList(nearItems,'near')+'<p class="smallprint">Distances à vol d’oiseau · OpenStreetMap.</p>':`<p class="smallprint">${nearError?'Liste locale momentanément indisponible.':'Aucun lieu répertorié à proximité.'}</p>`)+
+ (loc&&!state.gpsBusy?'<div class="actions"><button class="btn secondary wide" id="openNearMap">🗺️ Explorer aussi dans Google Maps</button></div>':'')+
+ `<details><summary>💬 Demander à ChatGPT</summary>${(NEAR_QUESTIONS[item[0]]||[]).slice(0,3).map((q,i)=>`<button class="btn ghost questionbtn" data-near-suggest="${i}">${esc(q)}</button>`).join('')}<button class="btn secondary wide" id="nearQuestion">Ma question</button></details></section>`;
+}
+function searchNearCategory(category){
+ if(!NEAR.some(x=>x[0]===category))return;
+ const serial=++nearRequestSerial;state.selectedNear=category;nearItems=[];nearError=false;nearLoading=true;state.gpsError='';state.gpsBusy=true;render();
+ if(!navigator.geolocation){state.gpsBusy=false;nearLoading=false;state.gpsError='GPS indisponible.';render();return;}
+ navigator.geolocation.getCurrentPosition(async pos=>{
+  if(serial!==nearRequestSerial)return;
+  const lat=pos.coords.latitude,lon=pos.coords.longitude,accuracy=pos.coords.accuracy;
+  state.gpsBusy=false;
+  if(!validPoint(lat,lon)||!Number.isFinite(accuracy)||accuracy>1500){nearLoading=false;state.gpsError='Position trop imprécise. Réessaie.';render();return;}
+  state.gps={lat,lon,accuracy,when:Date.now()};detectCountry(lat,lon);render();
+  try{
+   let list=await findOsmPlaces([category],lat,lon,1100);
+   // Search farther only if we still don't have a useful local shortlist.
+   if(list.length<7){try{const farther=await findOsmPlaces([category],lat,lon,category==='nightmarket'?6000:3000);
+    const seen=new Set();list=[...list,...farther].sort((a,b)=>a.distance-b.distance).filter(p=>{const k=p.name.toLowerCase()+'|'+p.lat.toFixed(4)+'|'+p.lon.toFixed(4);if(seen.has(k))return false;seen.add(k);return true;});}catch(_){/* Conserver les lieux déjà trouvés à proximité. */}}
+   if(serial!==nearRequestSerial)return;
+   nearItems=list;nearError=false;
+  }catch(_){if(serial!==nearRequestSerial)return;nearItems=[];nearError=true;}
+  if(serial!==nearRequestSerial)return;
+  nearLoading=false;render();
+ },err=>{
+  if(serial!==nearRequestSerial)return;
+  state.gpsBusy=false;nearLoading=false;state.gpsError=err.code===1?'Autorise la localisation pour voir les adresses proches.':'Position GPS indisponible. Réessaie.';render();
+ },{enableHighAccuracy:true,timeout:16000,maximumAge:0});
+}
+function safetyPhrases(){
+ const data={
+ PH:['Tagalog / anglais',[['Kailangan ko ng doktor.','J’ai besoin d’un médecin.'],['Tumawag po kayo ng ambulansya.','Appelez une ambulance.'],['May allergy ako sa kagat ng bubuyog o putakti.','Je suis allergique aux piqûres d’abeilles ou de guêpes.'],['Nahihirapan akong huminga.','J’ai du mal à respirer.']]],
+ ID:['Indonésien',[['Saya perlu dokter.','J’ai besoin d’un médecin.'],['Tolong panggil ambulans.','Appelez une ambulance.'],['Saya alergi terhadap sengatan lebah atau tawon.','Je suis allergique aux piqûres d’abeilles ou de guêpes.'],['Saya sulit bernapas.','J’ai du mal à respirer.']]],
+ TH:['Thaï',[['ฉันต้องการหมอ','J’ai besoin d’un médecin.'],['กรุณาเรียกรถพยาบาล','Appelez une ambulance.'],['ฉันแพ้พิษผึ้งและตัวต่อ','Je suis allergique aux piqûres d’abeilles et de guêpes.'],['ฉันหายใจลำบาก','J’ai du mal à respirer.']]],
+ ES:['Espagnol',[['Necesito un médico.','J’ai besoin d’un médecin.'],['Llame a una ambulancia, por favor.','Appelez une ambulance.'],['Soy alérgico a las picaduras de abejas y avispas.','Je suis allergique aux piqûres d’abeilles et de guêpes.'],['Me cuesta respirar.','J’ai du mal à respirer.']]],
+ DE:['Allemand',[['Ich brauche einen Arzt.','J’ai besoin d’un médecin.'],['Rufen Sie bitte einen Krankenwagen.','Appelez une ambulance.'],['Ich bin allergisch gegen Bienen- und Wespenstiche.','Je suis allergique aux piqûres d’abeilles et de guêpes.'],['Ich habe Atembeschwerden.','J’ai du mal à respirer.']]],
+ FR:['Français',[['J’ai besoin d’un médecin.','J’ai besoin d’un médecin.'],['Appelez une ambulance.','Appelez une ambulance.'],['Je suis allergique aux piqûres d’abeilles et de guêpes.','Allergie aux piqûres d’abeilles et de guêpes.'],['J’ai du mal à respirer.','J’ai du mal à respirer.']]]
+ };
+ return data[state.country]||['Anglais',[['I need a doctor.','J’ai besoin d’un médecin.'],['Please call an ambulance.','Appelez une ambulance.'],['I am allergic to bee and wasp stings.','Je suis allergique aux piqûres d’abeilles et de guêpes.'],['I am having difficulty breathing.','J’ai du mal à respirer.']]];
+}
+function loadSafetyFromGps(){
+ if(safety.busy||safety.loading)return;
+ const loc=state.gps;
+ if(loc&&validPoint(loc.lat,loc.lon)&&Date.now()-(loc.when||0)<180000){
+  updateSafetyPlaces(loc.lat,loc.lon);return;
+ }
+ if(!navigator.geolocation){safety.error='Position indisponible. Dernières informations conservées.';render();return;}
+ safety.busy=true;safety.error='';render();
+ navigator.geolocation.getCurrentPosition(pos=>{
+  safety.busy=false;
+  const {latitude:lat,longitude:lon,accuracy}=pos.coords;
+  if(!validPoint(lat,lon)||!Number.isFinite(accuracy)||accuracy>1500){safety.error='Position trop imprécise.';render();return;}
+  state.gps={lat,lon,accuracy,when:Date.now()};
+  safety.verified=false;detectCountry(lat,lon);updateSafetyPlaces(lat,lon);
+ },err=>{safety.busy=false;safety.error=err.code===1?'Autorise la localisation pour afficher les secours proches.':'GPS indisponible. Dernières informations conservées.';render();
+ },{enableHighAccuracy:true,timeout:16000,maximumAge:0});
+}
+async function updateSafetyPlaces(lat,lon){
+ if(safety.loading)return;
+ const old=safety.position;
+ // Ne pas garder des services anciens si on a changé de ville.
+ const changed=!old||distanceMeters(lat,lon,old.lat,old.lon)>800;
+ if(changed){safety.services={};}
+ else if(safety.storedAt&&Date.now()-safety.storedAt<10*60*1000&&Object.values(safety.services).some(a=>Array.isArray(a)&&a.length)){
+  for(const key of Object.keys(safety.services))safety.services[key]=safety.services[key].map(p=>({...p,distance:distanceMeters(lat,lon,p.lat,p.lon)})).sort((a,b)=>a.distance-b.distance);
+  safety.position={lat,lon};render();return;
+ }
+ safety.position={lat,lon};safety.loading=true;render();
+ const keys=SAFETY_TABS.map(x=>x[0]);
+ try{
+  const raw=await findSafetyCategories(lat,lon);
+  for(const k of keys){safety.services[k]=(raw[k]||[]).slice(0,10);}
+  safety.error='';saveSafety();
+ }catch(_){safety.error='Liste locale momentanément indisponible.';if(changed){safety.services={};}}
+ safety.loading=false;render();
+}
+async function findSafetyCategories(lat,lon){
+ const q=queriesForKeys(SAFETY_TABS.map(x=>x[0]),lat,lon,5500);
+ for(const base of PLACE_SEARCH_SERVERS){
+  const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),11000);
+  try{const res=await fetch(base+encodeURIComponent(q),{signal:ac.signal});if(!res.ok)throw Error('Recherche indisponible');
+   const j=await res.json();if(!Array.isArray(j.elements))throw Error('Données invalides');
+   const out=Object.fromEntries(SAFETY_TABS.map(x=>[x[0],[]]));
+   for(const el of j.elements){
+    const tags=el.tags||{},a=Number(el.lat??el.center?.lat),b=Number(el.lon??el.center?.lon);
+    const name=String(tags['name:fr']||tags.name||tags['name:en']||tags.brand||'').trim();
+    if(!name||!validPoint(a,b))continue;
+    const dist=distanceMeters(lat,lon,a,b);if(dist>5700)continue;
+    const cat=String(tags.healthcare||tags.amenity||'').toLowerCase();
+    const k=cat==='hospital'?'hospital':cat==='clinic'?'clinic':cat==='doctors'||cat==='doctor'?'doctor':cat==='pharmacy'?'pharmacy':cat==='police'?'police':null;
+    if(k){const phone=String(tags['contact:phone']||tags.phone||'').trim().split(/[;,]/)[0].trim();
+     out[k].push({name,lat:a,lon:b,distance:dist,phone:/^[+0-9 ()\-]{5,24}$/.test(phone)?phone:''});}
+   }
+   for(const k of Object.keys(out)){
+    const seen=new Set();out[k]=out[k].sort((a,b)=>a.distance-b.distance).filter(p=>{
+     const tag=p.name.toLowerCase()+'|'+p.lat.toFixed(4)+'|'+p.lon.toFixed(4);
+     if(seen.has(tag))return false;seen.add(tag);return true;
+    }).slice(0,10);
+   }
+   return out;
+  }catch(_){ }finally{clearTimeout(timer);}
+ }
+ throw Error('Services locaux indisponibles');
+}
+function buildAide(){
+ const country=COUNTRY[state.country]||COUNTRY.OTHER,phrases=safetyPhrases();
+ const countryLabel=state.country==='OTHER'?(safety.countryName||country.label):country.label;
+ const countryText=safety.verified?`${safety.city?safety.city+' · ':''}${countryLabel}`:countryLabel+' · pays à confirmer';
+ const cat=SAFETY_TABS.find(x=>x[0]===safety.tab)||SAFETY_TABS[0],list=safety.services[safety.tab]||[];
+ const emergency=country.emergencies||[];
+ return header('Secours en voyage','🆘 Aide-moi',safety.busy?'📍 Localisation automatique…':countryText)+
+ `<section class="card help-emergency"><h2>📞 Appel d’urgence</h2>`+
+ (emergency.length?emergency.map(([label,phone])=>`<a href="tel:${encodeURIComponent(phone)}" aria-label="${esc(label)} ${esc(phone)}">${esc(label)} · ${esc(phone)}</a>`).join(''):'<p>Numéro local non disponible. Vérifie le pays.</p>')+
+ `</section><section class="card"><h2>🏥 Soins et secours près de moi</h2><div class="help-select">`+
+ SAFETY_TABS.map(([k,icon,name])=>`<button data-safety-tab="${k}" class="${safety.tab===k?'active':''}">${icon} ${name}</button>`).join('')+'</div>'+
+ (safety.busy||safety.loading?'<p class="subtitle">📍 Recherche à proximité…</p>':list.length?nearbyList(list,'safety')+'<p class="smallprint">Distances à vol d’oiseau · OpenStreetMap.</p>':`<p class="smallprint">${esc(safety.error||'Aucun lieu répertorié à proximité.')}</p>`)+
+ (safety.storedAt&&!safety.loading?'<p class="smallprint">Dernières adresses enregistrées sur cet appareil.</p>':'')+
+ `<div class="actions"><button class="btn secondary wide" id="openSafetyMap">🗺️ Autres adresses sur Maps</button></div></section>`+
+ `<section class="card"><details><summary>🗣️ Phrases de secours · ${esc(phrases[0])}</summary>`+
+ phrases[1].map(([local,fr])=>`<div class="help-phrase"><strong>${esc(local)}</strong><small>${esc(fr)}</small></div>`).join('')+
+ `</details><details><summary>📋 Informations et position de secours</summary><p class="smallprint">⚠️ Allergie signalée : abeilles / guêpes.</p><p class="smallprint">Les appels nécessitent du réseau. Les dernières informations restent disponibles hors connexion après leur chargement.</p><div class="actions"><button class="btn secondary" id="shareGPS">📋 Copier ma position</button><button class="btn secondary" id="refreshSafety">📍 Actualiser</button></div>${safety.error?`<p class="smallprint">${esc(safety.error)}</p>`:''}</details></section>`;
+}
 function currentSegment(){const t=active();if(!t||!t.segments?.length)return null;return t.segments[Math.max(0,Math.min(t.currentIndex||0,t.segments.length-1))];}
 function destName(s){return s.toPlaceName?.length>=4?s.toPlaceName:s.to;}
 function address(s){return [s.toAddress,s.toCity,s.toCountry].filter(Boolean).join(', ');}
@@ -201,7 +360,7 @@ function buildQuestion(){
  const title=nearMode?`📍 ${item?item[2]:'Autour de moi'}`:`${s.from} → ${s.to}`;
  return header('Sans crédit API','💬 Questions prêtes pour ChatGPT',title)+`<section class="card"><h2>Choisis une question</h2><p class="smallprint">Une question adaptée au ${nearMode?'thème sélectionné':'transport de cette étape'} suffit. Elle est préparée avec ${nearMode?'tes coordonnées GPS':'les détails du segment'}.</p>${qs.map((q,i)=>`<button type="button" class="btn ghost questionbtn ${state.questionSelected===i?'selected':''}" data-suggest="${i}" aria-pressed="${state.questionSelected===i?'true':'false'}">${state.questionSelected===i?'✓':'💬'} ${esc(q)}</button>`).join('')}<div class="divider"></div><label for="freeQuestion">✍️ Ou écris ta propre question</label><textarea class="field" id="freeQuestion" rows="2" placeholder="Ex. Je cherche l'option la moins chère sans changer trois fois de transport…">${esc(state.questionFree)}</textarea><button class="btn secondary wide" id="prepareFreeQuestion" style="margin-top:8px">Préparer ma question libre</button><div class="divider"></div><p class="callout">${esc(state.questionSelected===-1?state.questionFree.trim():qs[state.questionSelected]||"Question prête")}</p><textarea id="questionText" tabindex="-1" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0">${esc(state.questionText)}</textarea><div class="actions"><button class="btn teal" id="copyQuestion">📋 Copier</button><a class="btn secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Ouvrir ChatGPT ↗</a></div><p class="question-tip">Choisis, copie, puis colle dans ChatGPT.</p></section><button class="btn ghost" data-tab="${nearMode?'proche':'etapes'}">← Retour</button>`;
 }
-function buildReglages(){return header('Paramètres','⚙️ Réglages','Les fonctions gratuites restent disponibles sans clé ni abonnement supplémentaire.')+`<section class="card"><h2>💸 Maîtriser les coûts API</h2><div class="callout">Google Maps, Archives, GPS et questions via ton ChatGPT personnel ne consomment pas de crédits API LudoPilot.</div><label class="line-check"><input type="checkbox" id="paidAllowed" ${state.paidAllowed?'checked':''}><span><strong>Autoriser les recherches intelligentes payantes</strong><br><span class="smallprint">Désactivé par défaut. Une confirmation sera également demandée avant chaque recherche.</span></span></label>${field('worker','Adresse du moteur Cloudflare (facultatif)',state.worker,'https://…workers.dev','url')}<p class="smallprint">Ne saisis jamais de clé secrète OpenAI ou Google dans ce site public. Un Worker partagé publiquement devrait être protégé côté serveur contre les appels non autorisés.</p><button class="btn secondary" id="saveWorker">Enregistrer cette adresse</button></section><section class="card"><h2>📂 Archives</h2><div class="actions"><button class="btn secondary" id="export">Exporter JSON</button><button class="btn ghost" id="importButton">Importer JSON</button></div><input id="importFile" type="file" accept=".json,application/json" hidden><p class="smallprint">Les sauvegardes restent sur cet appareil. Tu peux les exporter vers Fichiers ou iCloud.</p></section><section class="card"><h2>📴 Mode hors connexion</h2><p class="smallprint">Les voyages et les fiches d’urgence enregistrés sont consultables hors ligne après chargement de l'application. Les cartes en ligne, les suggestions de lieux, les recherches et ChatGPT nécessitent Internet. Vérifie toujours les horaires des ferries, bus et vols.</p></section><p class="smallprint">LudoPilot Voyages V1.7 · Site GitHub Pages · Données personnelles stockées localement.</p>`;}
+function buildReglages(){return header('Paramètres','⚙️ Réglages','Les fonctions gratuites restent disponibles sans clé ni abonnement supplémentaire.')+`<section class="card"><h2>💸 Maîtriser les coûts API</h2><div class="callout">Google Maps, Archives, GPS et questions via ton ChatGPT personnel ne consomment pas de crédits API LudoPilot.</div><label class="line-check"><input type="checkbox" id="paidAllowed" ${state.paidAllowed?'checked':''}><span><strong>Autoriser les recherches intelligentes payantes</strong><br><span class="smallprint">Désactivé par défaut. Une confirmation sera également demandée avant chaque recherche.</span></span></label>${field('worker','Adresse du moteur Cloudflare (facultatif)',state.worker,'https://…workers.dev','url')}<p class="smallprint">Ne saisis jamais de clé secrète OpenAI ou Google dans ce site public. Un Worker partagé publiquement devrait être protégé côté serveur contre les appels non autorisés.</p><button class="btn secondary" id="saveWorker">Enregistrer cette adresse</button></section><section class="card"><h2>📂 Archives</h2><div class="actions"><button class="btn secondary" id="export">Exporter JSON</button><button class="btn ghost" id="importButton">Importer JSON</button></div><input id="importFile" type="file" accept=".json,application/json" hidden><p class="smallprint">Les sauvegardes restent sur cet appareil. Tu peux les exporter vers Fichiers ou iCloud.</p></section><section class="card"><h2>📴 Mode hors connexion</h2><p class="smallprint">Les voyages et les fiches d’urgence enregistrés sont consultables hors ligne après chargement de l'application. Les cartes en ligne, les suggestions de lieux, les recherches et ChatGPT nécessitent Internet. Vérifie toujours les horaires des ferries, bus et vols.</p></section><p class="smallprint">LudoPilot Voyages V1.8 · Site GitHub Pages · Données personnelles stockées localement.</p>`;}
 function render(){const app=byId('app');app.innerHTML=({voyage:buildVoyage,etapes:buildEtapes,archives:buildArchives,proche:buildProche,aide:buildAide,chauffeur:buildChauffeur,question:buildQuestion,reglages:buildReglages}[state.tab]||buildVoyage)();document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.tab));if(app.querySelector('[data-money]')){updateMoneyNodes();ensureFxRates();}}
 function createJourney(){const d={...state.form,origin:state.form.origin.trim(),destination:state.form.destination.trim()};if(!d.origin||!d.destination){toast('Indique le départ et l’arrivée.');return;}const t=newTrip(d);state.trips.unshift(t);state.activeId=t.id;save();setTab('etapes');toast('Voyage enregistré. Ajoute ses étapes.');}
 function addSegment(){const t=active();if(!t)return;const from=byId('segFrom')?.value.trim(),to=byId('segTo')?.value.trim();if(!from||!to){toast('Indique les deux lieux de l’étape.');return;}if(from.toLowerCase()===to.toLowerCase()){toast('Départ et arrivée identiques.');return;}if(t.segments.length>=16){toast('Maximum 16 segments.');return;}const prev=t.segments.at(-1);if(prev&&prev.to.trim().toLowerCase()!==from.toLowerCase()&&!confirm('Correspondance non raccordée avec l’étape précédente. Continuer ?'))return;t.segments.push(normalizeSegment({from,to,mode:byId('segMode').value,service:byId('segService').value.trim(),notes:byId('segNotes').value.trim()},t.segments.length));save();render();toast('Étape enregistrée.');}
@@ -210,29 +369,6 @@ function mapUrl(s){const marine=['plane','ferry','boat'].includes(s.mode);const 
 function openURL(url){window.open(url,'_blank','noopener,noreferrer');}
 function nearUrl(){const place=nearLocation(),item=NEAR.find(n=>n[0]===state.selectedNear);if(!place||!item)return null;const lat=place.lat.toFixed(6),lon=place.lon.toFixed(6);return 'https://www.google.com/maps/search/'+encodeURIComponent(item[3])+'/@'+lat+','+lon+',15z';}
 function nearAppleUrl(){const place=nearLocation(),item=NEAR.find(n=>n[0]===state.selectedNear);if(!place||!item)return null;return 'https://maps.apple.com/?q='+encodeURIComponent(item[3])+'&sll='+place.lat.toFixed(6)+','+place.lon.toFixed(6)+'&z=15';}
-let nearRequestSerial=0;
-function searchNearCategory(category){
- const item=NEAR.find(n=>n[0]===category);if(!item||state.gpsBusy)return;
- const serial=++nearRequestSerial;state.selectedNear=category;state.gps=null;state.gpsError='';nearestSupermarkets=[];nearestSupermarketsLoading=false;nearestSupermarketsError=false;
- if(!navigator.geolocation){state.gpsError='La localisation GPS est indisponible sur cet appareil.';render();return;}
- state.gpsBusy=true;render();
- navigator.geolocation.getCurrentPosition(pos=>{
-  if(serial!==nearRequestSerial)return;
-  state.gpsBusy=false;
-  const lat=pos.coords.latitude,lon=pos.coords.longitude,accuracy=pos.coords.accuracy;
-  if(!validPoint(lat,lon)||!Number.isFinite(accuracy)||accuracy>1500){
-   state.gps=null;state.gpsError='Position GPS trop imprécise. Réessaie près d’une fenêtre ou à l’extérieur.';render();return;
-  }
-  state.gps={lat,lon,accuracy,when:Date.now()};state.gpsError='';detectCountry(lat,lon);
-  if(category==='supermarket'){nearestSupermarketsLoading=true;render();loadNearestSupermarkets(serial,lat,lon);return;}
-  render();const url=nearUrl();if(url)window.location.assign(url);
- },err=>{
-  if(serial!==nearRequestSerial)return;
-  state.gpsBusy=false;state.gps=null;
-  state.gpsError=err.code===1?'Autorise la localisation de LudoPilot dans les réglages de Safari, puis réessaie.':'Impossible d’obtenir ta position pour le moment. Réessaie.';
-  render();
- },{enableHighAccuracy:true,timeout:16000,maximumAge:0});
-}
 function gps(then){if(!navigator.geolocation){state.gpsError='GPS indisponible sur ce navigateur. Aucune recherche à proximité ne sera lancée.';render();return;}if(state.gpsBusy)return;state.gpsBusy=true;state.gpsError='';render();navigator.geolocation.getCurrentPosition(pos=>{const lat=pos.coords.latitude,lon=pos.coords.longitude,accuracy=pos.coords.accuracy;state.gps={lat,lon,accuracy,when:Date.now(),place:''};state.gpsBusy=false;detectCountry(lat,lon);if(!validPoint(lat,lon))state.gpsError='Coordonnées GPS invalides : nouvelle tentative nécessaire.';else if(!Number.isFinite(accuracy)||accuracy>1500)state.gpsError='Position trop imprécise (environ '+Math.round(accuracy)+' m) pour une recherche à proximité. Réessaie dans un endroit mieux couvert.';else state.gpsError='';render();if(!state.gpsError){toast('📍 GPS prêt : '+lat.toFixed(5)+', '+lon.toFixed(5));if(typeof then==='function')then();}},err=>{state.gpsBusy=false;state.gps=null;state.gpsError=err.code===1?'Accès GPS refusé. Autorise la position de LudoPilot dans les réglages iPhone.':'GPS non disponible. Aucune recherche à proximité ne sera lancée.';render();toast(state.gpsError);},{enableHighAccuracy:true,timeout:16000,maximumAge:0});}
 
 async function copyText(s){try{await navigator.clipboard.writeText(s);toast('Copié.');}catch(_){const ta=byId('questionText');if(ta){ta.value=s;ta.focus();ta.select();toast(document.execCommand('copy')?'Copié.':'Copie indisponible.');}else toast('Copie indisponible sur ce navigateur.');}}
@@ -252,8 +388,8 @@ byId('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]')
 byId('helpTop').onclick=()=>setTab('aide');byId('settingsTop').onclick=()=>setTab('reglages');
 byId('app').addEventListener('input',e=>{const id=e.target.id;if(Object.hasOwn(state.form,id)){state.form[id]=e.target.value;save();if(['origin','destination','via'].includes(id))scheduleSuggest(id);}if(id==='questionText')state.questionText=e.target.value;if(id==='freeQuestion')state.questionFree=e.target.value;});
 byId('app').addEventListener('change',e=>{const id=e.target.id;if(id==='tripChooser'){state.activeId=e.target.value;save();render();}if(id==='country'&&COUNTRY[e.target.value]){state.country=e.target.value;state.nearPlace='';state.gps=null;state.gpsError='';save();render();}if(id==='paidAllowed'){if(e.target.checked){if(!confirm('Autoriser des recherches utilisant potentiellement tes crédits OpenAI ?')){e.target.checked=false;state.paidAllowed=false;}else state.paidAllowed=true;}else state.paidAllowed=false;save();}if(id==='preference'){state.form.preference=e.target.value;save();}if(id==='driverLang'){state.driverLang=e.target.value;save();render();}if(id==='importFile')importFile(e.target.files[0]);});
-byId('app').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.tab){setTab(b.dataset.tab);return;}if(b.dataset.place){const box=byId('suggest-'+b.dataset.place),f=box?._features?.[Number(b.dataset.idx)];if(!f)return;const p=f.properties||{};const label=[p.name,p.street,p.city||p.county,p.state,p.country].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).join(', ');state.form[b.dataset.place]=label;byId(b.dataset.place).value=label;box.style.display='none';save();return;}if(b.dataset.choose!==undefined){const t=active();if(t){t.currentIndex=Number(b.dataset.choose);t.complete=false;save();render();}return;}if(b.dataset.load){state.activeId=b.dataset.load;save();setTab('etapes');return;}if(b.dataset.rename){const t=state.trips.find(x=>x.id===b.dataset.rename);if(t){const n=prompt('Nom du voyage',t.name||t.destination);if(n!==null&&n.trim()){t.name=n.trim().slice(0,80);save();render();}}return;}if(b.dataset.clone){const t=state.trips.find(x=>x.id===b.dataset.clone);if(t){const copy=JSON.parse(JSON.stringify(t));copy.id=uid();copy.name=(t.name||t.destination)+' (copie)';copy.created=new Date().toISOString();state.trips.unshift(copy);state.activeId=copy.id;save();render();toast('Copie ajoutée aux archives.');}return;}if(b.dataset.driver!==undefined){const t=active();if(t){t.currentIndex=Number(b.dataset.driver);save();setTab('chauffeur');}return;}if(b.dataset.map!==undefined){const t=active();if(t?.segments?.[Number(b.dataset.map)])openURL(mapUrl(t.segments[Number(b.dataset.map)]));return;}if(b.dataset.question!==undefined){setQuestion(Number(b.dataset.question));return;}if(b.dataset.nearestSupermarket!==undefined){const shop=nearestSupermarkets[Number(b.dataset.nearestSupermarket)];const url=supermarketWalkingUrl(shop);if(url)openURL(url);return;}if(b.dataset.near){searchNearCategory(b.dataset.near);return;}if(b.dataset.nearSuggest!==undefined){if(!nearLocation()){state.gpsError='Position GPS non disponible. Choisis à nouveau le thème pour lancer la localisation.';render();return;}setQuestion(-1,Number(b.dataset.nearSuggest));return;}if(b.dataset.suggest!==undefined){const idx=Number(b.dataset.suggest);const near=state.questionIndex<0;const q=near?(NEAR_QUESTIONS[state.selectedNear]||[])[idx]:currentSegment()?suggestedQuestions(currentSegment())[idx]:null;if(q){state.questionSelected=idx;state.questionText=near?nearbyPrompt(q):questionPrompt(currentSegment(),q);render();}return;}
-const t=active();switch(b.id){case'createJourney':updateFormFromDom();createJourney();break;case'searchJourney':await searchJourney();break;case'addSegment':addSegment();break;case'prevSegment':advance(-1);break;case'nextSegment':advance(1);break;case'mapCurrent':if(currentSegment())openURL(mapUrl(currentSegment()));break;case'copyDriver':if(currentSegment())await copyText(driverText(currentSegment()));break;case'getGPS':gps();break;case'retryNear':searchNearCategory(state.selectedNear);break;case'shareGPS':if(!state.gps)gps();else await copyText(`Ma position GPS : https://www.google.com/maps/search/?api=1&query=${state.gps.lat},${state.gps.lon}`);break;case'showGPSmap':if(state.gps)openURL('https://www.google.com/maps/search/?api=1&query='+state.gps.lat+','+state.gps.lon);else gps(()=>openURL('https://www.google.com/maps/search/?api=1&query='+state.gps.lat+','+state.gps.lon));break;case'openNearMap':{const u=nearUrl();if(!u){state.gpsError='Position GPS non disponible. Sélectionne à nouveau le thème.';render();break;}openURL(u);break;}case'openNearApple':{const u=nearAppleUrl();if(!u){state.gpsError='Position GPS non disponible. Sélectionne à nouveau le thème.';render();break;}openURL(u);break;}case'nearQuestion':if(nearLocation())setQuestion(-1);else{state.gpsError='Sélectionne à nouveau le thème pour actualiser ta position avant ta question.';render();}break;case'prepareFreeQuestion':{const q=state.questionFree.trim();if(!q){toast('Écris d’abord ta question.');break;}if(state.questionIndex<0){if(!nearLocation()){toast('GPS expiré : choisis à nouveau le thème pour relocaliser l’iPhone.');break;}state.questionText=nearbyPrompt(q);}else if(currentSegment())state.questionText=questionPrompt(currentSegment(),q);state.questionSelected=-1;render();toast('Question libre préparée.');break;}case'copyQuestion':await copyText(state.questionText);break;case'saveWorker':saveWorker();break;case'export':downloadJson();break;case'importButton':byId('importFile')?.click();break;case'deleteTrip':if(t&&confirm('Supprimer définitivement ce voyage local ?')){state.trips=state.trips.filter(x=>x.id!==t.id);state.activeId=state.trips[0]?.id||null;save();setTab('archives');}break;}});
+byId('app').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.tab){setTab(b.dataset.tab);return;}if(b.dataset.place){const box=byId('suggest-'+b.dataset.place),f=box?._features?.[Number(b.dataset.idx)];if(!f)return;const p=f.properties||{};const label=[p.name,p.street,p.city||p.county,p.state,p.country].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).join(', ');state.form[b.dataset.place]=label;byId(b.dataset.place).value=label;box.style.display='none';save();return;}if(b.dataset.choose!==undefined){const t=active();if(t){t.currentIndex=Number(b.dataset.choose);t.complete=false;save();render();}return;}if(b.dataset.load){state.activeId=b.dataset.load;save();setTab('etapes');return;}if(b.dataset.rename){const t=state.trips.find(x=>x.id===b.dataset.rename);if(t){const n=prompt('Nom du voyage',t.name||t.destination);if(n!==null&&n.trim()){t.name=n.trim().slice(0,80);save();render();}}return;}if(b.dataset.clone){const t=state.trips.find(x=>x.id===b.dataset.clone);if(t){const copy=JSON.parse(JSON.stringify(t));copy.id=uid();copy.name=(t.name||t.destination)+' (copie)';copy.created=new Date().toISOString();state.trips.unshift(copy);state.activeId=copy.id;save();render();toast('Copie ajoutée aux archives.');}return;}if(b.dataset.driver!==undefined){const t=active();if(t){t.currentIndex=Number(b.dataset.driver);save();setTab('chauffeur');}return;}if(b.dataset.map!==undefined){const t=active();if(t?.segments?.[Number(b.dataset.map)])openURL(mapUrl(t.segments[Number(b.dataset.map)]));return;}if(b.dataset.question!==undefined){setQuestion(Number(b.dataset.question));return;}if(b.dataset.placeRoute){const [kind,rawIndex]=b.dataset.placeRoute.split(':');const list=kind==='near'?nearItems:(safety.services[safety.tab]||[]);const url=routeToPlace(list[Number(rawIndex)]);if(url)openURL(url);return;}if(b.dataset.safetyTab){safety.tab=b.dataset.safetyTab;render();return;}if(b.dataset.near){searchNearCategory(b.dataset.near);return;}if(b.dataset.nearSuggest!==undefined){if(!nearLocation()){state.gpsError='Position GPS non disponible. Choisis à nouveau le thème pour lancer la localisation.';render();return;}setQuestion(-1,Number(b.dataset.nearSuggest));return;}if(b.dataset.suggest!==undefined){const idx=Number(b.dataset.suggest);const near=state.questionIndex<0;const q=near?(NEAR_QUESTIONS[state.selectedNear]||[])[idx]:currentSegment()?suggestedQuestions(currentSegment())[idx]:null;if(q){state.questionSelected=idx;state.questionText=near?nearbyPrompt(q):questionPrompt(currentSegment(),q);render();}return;}
+const t=active();switch(b.id){case'createJourney':updateFormFromDom();createJourney();break;case'searchJourney':await searchJourney();break;case'addSegment':addSegment();break;case'prevSegment':advance(-1);break;case'nextSegment':advance(1);break;case'mapCurrent':if(currentSegment())openURL(mapUrl(currentSegment()));break;case'copyDriver':if(currentSegment())await copyText(driverText(currentSegment()));break;case'getGPS':gps();break;case'retryNear':searchNearCategory(state.selectedNear);break;case'refreshSafety':safety.loading=false;state.gps=null;loadSafetyFromGps();break;case'openSafetyMap':{const item=SAFETY_TABS.find(x=>x[0]===safety.tab);const loc=state.gps||safety.position;if(loc&&item){openURL('https://www.google.com/maps/search/'+encodeURIComponent(item[2])+'/@'+loc.lat.toFixed(6)+','+loc.lon.toFixed(6)+',15z');}else toast('Position GPS indisponible.');break;}case'shareGPS':if(!state.gps)gps();else await copyText(`Ma position GPS : https://www.google.com/maps/search/?api=1&query=${state.gps.lat},${state.gps.lon}`);break;case'showGPSmap':if(state.gps)openURL('https://www.google.com/maps/search/?api=1&query='+state.gps.lat+','+state.gps.lon);else gps(()=>openURL('https://www.google.com/maps/search/?api=1&query='+state.gps.lat+','+state.gps.lon));break;case'openNearMap':{const u=nearUrl();if(!u){state.gpsError='Position GPS non disponible. Sélectionne à nouveau le thème.';render();break;}openURL(u);break;}case'openNearApple':{const u=nearAppleUrl();if(!u){state.gpsError='Position GPS non disponible. Sélectionne à nouveau le thème.';render();break;}openURL(u);break;}case'nearQuestion':if(nearLocation())setQuestion(-1);else{state.gpsError='Sélectionne à nouveau le thème pour actualiser ta position avant ta question.';render();}break;case'prepareFreeQuestion':{const q=state.questionFree.trim();if(!q){toast('Écris d’abord ta question.');break;}if(state.questionIndex<0){if(!nearLocation()){toast('GPS expiré : choisis à nouveau le thème pour relocaliser l’iPhone.');break;}state.questionText=nearbyPrompt(q);}else if(currentSegment())state.questionText=questionPrompt(currentSegment(),q);state.questionSelected=-1;render();toast('Question libre préparée.');break;}case'copyQuestion':await copyText(state.questionText);break;case'saveWorker':saveWorker();break;case'export':downloadJson();break;case'importButton':byId('importFile')?.click();break;case'deleteTrip':if(t&&confirm('Supprimer définitivement ce voyage local ?')){state.trips=state.trips.filter(x=>x.id!==t.id);state.activeId=state.trips[0]?.id||null;save();setTab('archives');}break;}});
 window.addEventListener('online',()=>{if(state.tab==='voyage')render();});
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 render();
