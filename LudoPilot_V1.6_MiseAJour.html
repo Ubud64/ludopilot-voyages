@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LudoPilot Voyages V1.6</title>
+<style>:root{font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18384b;background:#eef4f7}*{box-sizing:border-box}body{margin:0;padding:36px 16px}main{max-width:440px;margin:auto;background:#fff;padding:24px;border-radius:20px;box-shadow:0 6px 22px #17364d14}h1{font-size:25px;margin:0 0 8px}.muted{color:#597081}button{display:block;width:100%;border:0;background:#087e77;color:#fff;font:inherit;font-weight:800;padding:15px;border-radius:12px;min-height:52px;margin:18px 0;cursor:pointer}button:disabled{opacity:.55}#status{white-space:pre-line}input{width:100%;font:inherit;margin-top:6px}</style></head>
+<body><main><h1>🧭 LudoPilot Voyages</h1><p class="muted">Mise à jour V1.6</p><p>Crée le nouveau <strong>index.html</strong> sans modifier tes voyages ni les archives.</p>
+<button id="go">Créer index.html V1.6</button><p id="status" role="status" aria-live="polite"></p>
+<details><summary>Si la récupération automatique échoue</summary><p>Sélectionne le fichier <strong>index.html V1.5</strong> présent sur ton appareil.</p><input id="file" type="file" accept=".html,text/html"></details></main>
+<script>
+'use strict';
+function upgrade(source){
+ let s=String(source),changes=0;
+ function replace(oldText,newText,label){
+   const count=s.split(oldText).length-1;
+   if(count!==1)throw Error('Version source incompatible : '+label+' ('+count+' correspondances).');
+   s=s.replace(oldText,newText);changes++;
+ }
+ if(!s.includes('<title>LudoPilot Voyages V1.5</title>'))throw Error('La mise à jour exige LudoPilot Voyages V1.5. Aucun fichier modifié.');
+ replace('<title>LudoPilot Voyages V1.5</title>','<title>LudoPilot Voyages V1.6</title>','titre');
+ replace('V1.5 · SIMPLE ET ÉCONOMIQUE','V1.6 · SIMPLE ET ÉCONOMIQUE','bandeau');
+ replace("header('Préparer · V1.5'","header('Préparer · V1.6'",'accueil');
+ replace('LudoPilot Voyages V1.5 · Site GitHub Pages','LudoPilot Voyages V1.6 · Site GitHub Pages','pied');
+ replace("const note=byId('fxInfo');if(note)note.textContent=fx.date&&hasFreshFx()?'💶 Conversions indicatives, taux du '+fx.date.split('-').reverse().join('/')+' (hors frais bancaires).':'💶 Conversions indicatives. Taux non disponible pour le moment.';", "const note=byId('fxInfo');if(note)note.remove();",'texte taux');
+ replace("return whole+(fx.busy||!fx.error?' (conversion € en cours…)':' (conversion € indisponible)');", "return whole;", 'conversion discrète');
+ // Déduire discrètement le pays du GPS. Si l'API géographique refuse, aucun pays n'est inventé.
+ replace('function buildProche(){',`async function detectCountry(lat,lon){
+ try{const u='https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&zoom=6&lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon);
+ const a=await fetch(u,{headers:{Accept:'application/json'}});if(!a.ok)return;
+ const j=await a.json(),code=String(j?.address?.country_code||'').toUpperCase();
+ if(COUNTRY[code]&&state.country!==code){state.country=code;save();}
+ }catch(_){ /* Le GPS reste utilisable sans géocodage. */ }
+}
+function buildProche(){`,'pays GPS');
+ replace("state.gps={lat,lon,accuracy,when:Date.now()};state.gpsError='';render();", "state.gps={lat,lon,accuracy,when:Date.now()};state.gpsError='';detectCountry(lat,lon);render();",'pays via recherche');
+ replace("state.gps={lat,lon,accuracy,when:Date.now(),place:''};state.gpsBusy=false;", "state.gps={lat,lon,accuracy,when:Date.now(),place:''};state.gpsBusy=false;detectCountry(lat,lon);",'pays via aide');
+ replace("Chaque tarif en devise locale doit être immédiatement suivi de sa conversion indicative en euros entre parenthèses, calculée avec un taux de change récent et daté (exemple : 500 PHP (≈ 7,50 €)). Si aucun taux fiable n’est disponible, indique-le, sans inventer la conversion.", "Chaque prix en monnaie locale doit être suivi de son équivalent approximatif en euros entre parenthèses, calculé avec le taux du jour. Exemple : 500 PHP (≈ 7,50 €). N’affiche ni source de taux, ni méthode de calcul, ni durée de validité. Si tu ne peux pas calculer le montant, n'invente pas de taux. Réponse courte, sans détails superflus.",'consigne voyage');
+ replace("Après chaque tarif en monnaie locale, donne entre parenthèses le montant indicatif en euros, au taux de change récent et daté. N’invente pas les tarifs ou les taux de change.", "Chaque tarif local est immédiatement suivi du montant approximatif en euros entre parenthèses avec le taux du jour, sans expliquer le change, citer Google, ni parler de durée de validité. Donne au maximum cinq adresses, avec le nom, l'intérêt principal, un prix si vérifié et la localisation. Réponse brève. N’invente ni prix ni taux de change.",'consigne proximité');
+ replace('<label for="questionText">Texte préparé à copier (modifiable)</label><textarea class="field" id="questionText" rows="7">${esc(state.questionText)}</textarea>', '<p class="callout">${esc(state.questionSelected===-1?state.questionFree.trim():qs[state.questionSelected]||"Question prête")}</p><textarea id="questionText" tabindex="-1" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0">${esc(state.questionText)}</textarea>', 'consigne invisible');
+ replace('📋 Copier pour ChatGPT','📋 Copier','bouton copier');
+ replace('① Choisis une question ② Copie ③ Colle dans ton ChatGPT. Aucun crédit API LudoPilot n’est utilisé.','Choisis, copie, puis colle dans ChatGPT.','mode emploi');
+ replace("async function copyText(s){try{await navigator.clipboard.writeText(s);toast('Texte copié.');}catch(_){const ta=byId('questionText');if(ta){ta.focus();ta.select();toast('Sélectionne « Copier » puis colle dans ChatGPT.');}else toast('Copie indisponible sur ce navigateur.');}}", "async function copyText(s){try{await navigator.clipboard.writeText(s);toast('Copié.');}catch(_){const ta=byId('questionText');if(ta){ta.value=s;ta.focus();ta.select();toast(document.execCommand('copy')?'Copié.':'Copie indisponible.');}else toast('Copie indisponible sur ce navigateur.');}}", 'presse-papiers iPhone');
+ return {html:s,changes};
+}
+if(typeof module!=='undefined'&&module.exports) module.exports=upgrade;
+const status=document.getElementById('status');
+function download(source){const o=upgrade(source),b=new Blob([o.html],{type:'text/html;charset=utf-8'}),a=document.createElement('a'),u=URL.createObjectURL(b);a.href=u;a.download='index.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);status.textContent='✅ index.html V1.6 créé. Remplace uniquement index.html sur GitHub.';}
+document.getElementById('go').onclick=async()=>{const btn=document.getElementById('go');btn.disabled=true;status.textContent='Récupération de la V1.5…';try{
+ const url='https://raw.githubusercontent.com/Ubud64/ludopilot-voyages/main/index.html?ts='+Date.now();
+ const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error('Version GitHub inaccessible ('+r.status+')');download(await r.text());
+}catch(e){status.textContent='❌ '+(e.message||e)+'\nTu peux choisir ton fichier V1.5 ci-dessous.';}finally{btn.disabled=false;}};
+document.getElementById('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{download(await f.text())}catch(err){status.textContent='❌ '+(err.message||err)}};
+</script></body></html>
