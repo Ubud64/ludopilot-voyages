@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="LudoPilot">
 <meta name="description" content="LudoPilot Voyages, assistant de voyage international, GPS par étape et services proches.">
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./icon-180.png">
-<title>LudoPilot Voyages V1.11</title>
+<title>LudoPilot Voyages V1.12</title>
 <style>
 :root{color-scheme:light;--ink:#17364d;--muted:#627588;--bg:#eef4f7;--card:#fff;--blue:#086fab;--line:#dce5eb;--accent:#0d8c86;--red:#a93439}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.48 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;padding-bottom:calc(88px + env(safe-area-inset-bottom))}button,input,select,textarea{font:inherit}button{cursor:pointer}
@@ -18,14 +18,14 @@ label{display:block;font-size:13px;font-weight:750;margin:12px 0 5px}.field{disp
 nav{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:white;border-top:1px solid var(--line);padding:7px 4px calc(6px + env(safe-area-inset-bottom));z-index:10;box-shadow:0 -4px 14px #16446009}nav button{background:transparent;border:0;color:#627588;font-size:10.5px;font-weight:800;display:grid;justify-items:center;gap:2px;padding:5px 2px;border-radius:10px}nav button.active{background:#eaf4fa;color:var(--blue)}nav button .icon{font-size:22px;line-height:1.25}
 #toast{position:fixed;z-index:20;bottom:calc(92px + env(safe-area-inset-bottom));left:14px;right:14px;max-width:620px;margin:auto;background:#173b50;color:white;border-radius:11px;padding:11px 14px;text-align:center;display:none;box-shadow:0 6px 25px #0003}.suggestions{margin-top:3px;border:1px solid #cee0e8;background:#fff;border-radius:11px;overflow:hidden;box-shadow:0 5px 14px #16446017}.suggestions button{width:100%;text-align:left;background:#fff;color:var(--ink);border:0;border-bottom:1px solid var(--line);padding:11px 12px;line-height:1.35}.suggestions button:last-child{border-bottom:none}.suggestions .suggest-meta{font-size:11px;color:var(--muted)}.near-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.placebtn{min-height:82px;border:1px solid var(--line);border-radius:13px;padding:12px;background:white;color:var(--ink);text-align:center;font-weight:800;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}.placebtn .emoji{font-size:26px}.placebtn:disabled{cursor:wait}.placebtn.selected{border:3px solid var(--accent);padding:10px;background:#e4f7f2;color:#06665f;box-shadow:0 0 0 2px #c4eee6 inset}.placebtn.selected::after{content:'✓ Sélectionné';font-size:12px;font-weight:900;color:#056b64}.driver-place{text-align:center;font-size:clamp(26px,8vw,43px);overflow-wrap:anywhere;font-weight:900;margin:20px 0}.driver-translation{text-align:center;font-size:22px;font-weight:800;margin:12px 0}.driver-caption{text-align:center;letter-spacing:1px;color:var(--accent);font-size:12px;font-weight:850}.driver-address{text-align:center;color:var(--muted);overflow-wrap:anywhere}.questionbtn{text-align:left;width:100%;margin:5px 0;justify-content:flex-start;line-height:1.35;white-space:normal}.questionbtn.selected{background:#e4f7f2;border:2px solid var(--accent);color:#06665f}.questionbtn:disabled{opacity:.55}.question-tip{margin-top:10px;color:var(--muted);font-size:12px}.archive-title{font-size:16px;font-weight:800}.help-number{font-size:26px;font-weight:900}.help-red{background:#b62e39;color:white}.help-red .subtitle{color:#ffedf0}.link{color:var(--blue);word-wrap:anywhere}.line-check{display:flex;align-items:flex-start;gap:9px;font-size:13px}.line-check input{margin-top:4px;accent-color:var(--accent)}
 @media(max-width:365px){.grid2{grid-template-columns:1fr}.actions>.btn{min-width:110px}.top{padding-left:9px;padding-right:9px}.brand{font-size:18px}main{padding:13px 10px}}@media print{.top,nav,.actions,.btn{display:none!important}body{padding:0;background:white}.card{border:none}}
-/* V1.11 : listes compactes classées par distance, sans publicité */
+/* V1.12 : listes compactes classées par distance, sans publicité */
 .near-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;margin:7px 0;padding:12px;border:1px solid var(--line);border-radius:11px;background:white;color:var(--ink)}
 .near-row strong{display:block;font-size:14px}.near-row small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.near-distance{flex-shrink:0;color:#087870;font-weight:800;font-size:13px}
 .help-select{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}.help-select button{padding:10px 7px;min-height:49px;border:1px solid var(--line);background:white;border-radius:10px;color:var(--ink);font-size:13px;font-weight:800}.help-select button.active{background:#e4f7f2;border:2px solid var(--accent);padding:9px 6px;color:#06665f}
 .help-emergency{background:#a8343c;color:#fff}.help-emergency h2,.help-emergency .subtitle{color:#fff}.help-emergency a{display:inline-flex;background:#fff;color:#a12c36;align-items:center;justify-content:center;text-decoration:none;padding:10px 12px;min-height:43px;border-radius:10px;font-weight:900;margin:4px 5px 4px 0}
 .help-phrase{border-bottom:1px solid var(--line);padding:10px 0}.help-phrase strong{font-size:16px;display:block}.help-phrase small{color:var(--muted);font-size:12px}
 details > summary{cursor:pointer;font-weight:800;padding:8px 0}
-/* V1.11 : écran d'assistance sans choix intermédiaire. */
+/* V1.12 : écran d'assistance sans choix intermédiaire. */
 .safety-place{border:1px solid var(--line);border-radius:12px;padding:11px;margin:8px 0;background:#fff}
 .safety-place .place-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:9px}
 .safety-place .place-category{font-size:12px;color:var(--muted);font-weight:750}
@@ -39,7 +39,7 @@ details > summary{cursor:pointer;font-weight:800;padding:8px 0}
 </style>
 </head>
 <body>
-<header class="top"><div class="top-line"><div><div class="brand">🧭 LudoPilot <span style="color:#66d7cf">Voyages</span></div><div class="subbrand">V1.11 · SIMPLE ET ÉCONOMIQUE</div></div><div class="top-actions"><button id="helpTop" class="headbtn" aria-label="Aide-moi">🆘</button><button id="settingsTop" class="headbtn" aria-label="Réglages">⚙️</button></div></div></header>
+<header class="top"><div class="top-line"><div><div class="brand">🧭 LudoPilot <span style="color:#66d7cf">Voyages</span></div><div class="subbrand">V1.12 · SIMPLE ET ÉCONOMIQUE</div></div><div class="top-actions"><button id="helpTop" class="headbtn" aria-label="Aide-moi">🆘</button><button id="settingsTop" class="headbtn" aria-label="Réglages">⚙️</button></div></div></header>
 <main id="app"></main>
 <nav id="tabs" aria-label="Navigation"><button data-tab="voyage"><span class="icon">🧭</span>Voyage</button><button data-tab="etapes"><span class="icon">🗺️</span>Étapes</button><button data-tab="archives"><span class="icon">📂</span>Archives</button><button data-tab="proche"><span class="icon">📍</span>Proche</button><button data-tab="aide"><span class="icon">🆘</span>Aide-moi</button></nav>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -124,7 +124,7 @@ function chooser(){return state.trips.length?`<label for="tripChooser">Voyage s�
 function countries(){return `<label for="country">🌐 Pays dans lequel tu voyages</label><select id="country" class="field">${Object.entries(COUNTRY).map(([k,v])=>`<option value="${k}" ${k===state.country?'selected':''}>${v.label}</option>`).join('')}</select>`;}
 function normalizeSegment(s,i){return {index:i+1,from:String(s?.from||''),to:String(s?.to||''),mode:String(s?.mode||'other'),modeLabel:String(s?.modeLabel||MODES[s?.mode]||'Transport'),fromPlaceName:String(s?.fromPlaceName||''),toPlaceName:String(s?.toPlaceName||''),toAddress:String(s?.toAddress||''),toCity:String(s?.toCity||''),toCountry:String(s?.toCountry||''),fromLatitude:validPoint(s?.fromLatitude,s?.fromLongitude)?Number(s.fromLatitude):null,fromLongitude:validPoint(s?.fromLatitude,s?.fromLongitude)?Number(s.fromLongitude):null,toLatitude:validPoint(s?.toLatitude,s?.toLongitude)?Number(s.toLatitude):null,toLongitude:validPoint(s?.toLatitude,s?.toLongitude)?Number(s.toLongitude):null,service:String(s?.service||s?.serviceDescription||''),notes:String(s?.notes||''),facts:Array.isArray(s?.facts)?s.facts.slice(0,10).map(f=>typeof f==='object'?{text:String(f.text||''),sourceURL:String(f.sourceURL||'')}: {text:String(f)}):[],questions:Array.isArray(s?.questions)?s.questions.slice(0,5).map(String):[]};}
 function newTrip(d){return {id:uid(),created:new Date().toISOString(),name:d.name||'',origin:d.origin,destination:d.destination,via:d.via||'',dateTime:d.dateTime||'',preference:d.preference||'surface',summary:d.summary||'',price:d.price||'',duration:d.duration||'',warnings:d.warnings||[],segments:d.segments||[],currentIndex:0,complete:false};}
-function buildVoyage(){const t=active(),f=state.form;return header('Préparer · V1.11','Où veux-tu aller ?','Tes adresses restent enregistrées même après une recherche.')+`<section class="card">${field('origin','📍 Départ exact',f.origin,'Hôtel, port, aéroport, ville…')}${field('destination','🏁 Arrivée exacte',f.destination,'Ex. Siquijor ou Chiang Mai')}${field('via','↪ Passage obligatoire (facultatif)',f.via,'Ex. Cebu, Bangkok')}<div class="grid2"><div>${field('dateTime','📅 Date locale',f.dateTime,'','datetime-local')}</div><div><label for="preference">Mode</label><select class="field" id="preference"><option value="surface" ${f.preference==='surface'?'selected':''}>Sans avion</option><option value="air" ${f.preference==='air'?'selected':''}>Avec avion</option></select></div></div><p class="smallprint">💡 Suggestions de lieux gratuites quand tu écris au moins 4 caractères. Vérifie toujours la bonne adresse.</p><div class="actions"><button class="btn secondary" id="createJourney">➕ Créer manuellement</button><button class="btn teal" id="searchJourney" ${state.busy?'disabled':''}>${state.busy?'⏳ Recherche…':'🔎 Recherche intelligente'}</button></div>${state.busy?`<div class="status" role="status">⏳ Recherche en cours. Laisse cet écran ouvert. Cela peut prendre jusqu'à quelques minutes.</div>`:''}${state.notice?`<div class="${state.error?'callout error':'status'}" role="status">${esc(state.notice)}</div>`:''}<div class="callout warning">La recherche intelligente utilise l’ancien moteur API et peut consommer tes crédits. Les autres fonctions sont gratuites. Active-la dans Réglages seulement si tu le souhaites.</div></section>${t?`<section class="card">${chooser()}<h2 style="margin-top:12px">${esc(t.origin)} → ${esc(t.destination)}</h2><p class="subtitle">${t.segments?.length||0} segments · ${esc(t.duration||'Durée à vérifier')} · ${t.price?moneyHtml(t.price):'Prix à vérifier'}</p><button class="btn wide" data-tab="etapes">Voir cet itinéraire →</button></section>`:''}<p class="smallprint">Vérifie les horaires et tarifs des transporteurs : aucun trajet aérien ou maritime n'est confirmé automatiquement à la réservation.</p>`;}
+function buildVoyage(){const t=active(),f=state.form;return header('Préparer · V1.12','Où veux-tu aller ?','Tes adresses restent enregistrées même après une recherche.')+`<section class="card">${field('origin','📍 Départ exact',f.origin,'Hôtel, port, aéroport, ville…')}${field('destination','🏁 Arrivée exacte',f.destination,'Ex. Siquijor ou Chiang Mai')}${field('via','↪ Passage obligatoire (facultatif)',f.via,'Ex. Cebu, Bangkok')}<div class="grid2"><div>${field('dateTime','📅 Date locale',f.dateTime,'','datetime-local')}</div><div><label for="preference">Mode</label><select class="field" id="preference"><option value="surface" ${f.preference==='surface'?'selected':''}>Sans avion</option><option value="air" ${f.preference==='air'?'selected':''}>Avec avion</option></select></div></div><p class="smallprint">💡 Suggestions de lieux gratuites quand tu écris au moins 4 caractères. Vérifie toujours la bonne adresse.</p><div class="actions"><button class="btn secondary" id="createJourney">➕ Créer manuellement</button><button class="btn teal" id="searchJourney" ${state.busy?'disabled':''}>${state.busy?'⏳ Recherche…':'🔎 Recherche intelligente'}</button></div>${state.busy?`<div class="status" role="status">⏳ Recherche en cours. Laisse cet écran ouvert. Cela peut prendre jusqu'à quelques minutes.</div>`:''}${state.notice?`<div class="${state.error?'callout error':'status'}" role="status">${esc(state.notice)}</div>`:''}<div class="callout warning">La recherche intelligente utilise l’ancien moteur API et peut consommer tes crédits. Les autres fonctions sont gratuites. Active-la dans Réglages seulement si tu le souhaites.</div></section>${t?`<section class="card">${chooser()}<h2 style="margin-top:12px">${esc(t.origin)} → ${esc(t.destination)}</h2><p class="subtitle">${t.segments?.length||0} segments · ${esc(t.duration||'Durée à vérifier')} · ${t.price?moneyHtml(t.price):'Prix à vérifier'}</p><button class="btn wide" data-tab="etapes">Voir cet itinéraire →</button></section>`:''}<p class="smallprint">Vérifie les horaires et tarifs des transporteurs : aucun trajet aérien ou maritime n'est confirmé automatiquement à la réservation.</p>`;}
 function buildEtapes(){const t=active();if(!t)return header('Navigation','Mes étapes')+`<section class="card"><p>Aucun voyage sélectionné.</p><button class="btn" data-tab="voyage">Préparer mon voyage</button></section>`;const ss=Array.isArray(t.segments)?t.segments:[],idx=Math.min(Math.max(0,t.currentIndex||0),Math.max(0,ss.length-1));return header('Navigation','Étape par étape',`${t.origin} → ${t.destination}`)+chooser()+`<section class="card"><h2>${esc(t.name||t.origin+' → '+t.destination)}</h2>${t.summary?`<p>${moneyHtml(t.summary)}</p>`:''}<div class="row"><span class="pill">${ss.length} segments</span><span class="meta">${esc(t.duration||'Durée à confirmer')}</span></div>${t.price?`<p class="meta">Coût estimé : ${moneyHtml(t.price)}</p>`:''}${Array.isArray(t.warnings)&&t.warnings.length?`<div class="callout warning">${t.warnings.map(moneyHtml).join('<div class="divider"></div>')}</div>`:''}${ss.length?ss.map((s,i)=>`<article class="step ${idx===i?'active':''}"><div class="row"><span class="pill">${i+1} / ${ss.length}</span><span class="meta">${esc(MODES[s.mode]||s.modeLabel||'Transport')}</span></div><div class="step-title">${esc(s.from)} → ${esc(s.to)}</div>${s.service?`<p class="meta">${moneyHtml(s.service)}</p>`:''}${s.notes?`<p class="meta">${moneyHtml(s.notes)}</p>`:''}${Array.isArray(s.facts)&&s.facts.length?`<ul class="facts">${s.facts.map(x=>`<li>${moneyHtml(x.text||x)}</li>`).join('')}</ul>`:''}<div class="actions"><button class="btn small ${idx===i?'teal':'ghost'}" data-choose="${i}">${idx===i?'✓ Active':'Choisir'}</button><button class="btn small secondary" data-map="${i}">🧭 GPS</button><button class="btn small secondary" data-driver="${i}">🚕 Chauffeur</button><button class="btn small ghost" data-question="${i}">💬 Questions</button></div>${['ferry','boat','plane'].includes(s.mode)?`<p class="smallprint">Pour un ${s.mode==='plane'?'vol':'bateau'}, le GPS ouvre le lieu d'arrivée sans inventer de route terrestre.</p>`:''}</article>`).join(''):`<div class="callout">Aucune étape pour le moment. Ajoute chaque véhicule ou correspondance séparément.</div>`}<p class="smallprint" id="fxInfo">💶 Conversions indicatives en euros, hors frais bancaires.</p>${ss.length?`<div class="actions"><button class="btn ghost" id="prevSegment" ${idx===0?'disabled':''}>← Précédente</button><button class="btn teal" id="nextSegment">${idx===ss.length-1?'✓ Terminé':'Suivante →'}</button></div>`:''}</section><section class="card"><h2>➕ Ajouter une étape</h2><p class="subtitle">Un véhicule = une étape. Un changement de ferry, taxi ou bus = nouvelle étape.</p>${field('segFrom','Départ',ss.length?ss.at(-1).to:t.origin,'Lieu précis')}${field('segTo','Arrivée','','Terminal, port, hôtel…')}<label for="segMode">Transport</label><select class="field" id="segMode">${Object.entries(MODES).map(([v,s])=>`<option value="${v}" ${v==='taxi'?'selected':''}>${s}</option>`).join('')}</select>${field('segService','Ligne ou service (facultatif)','','Ex. ferry, Grab, numéro du vol')}<label for="segNotes">Notes pratiques</label><textarea class="field" id="segNotes" placeholder="Prix, horaires, repères…"></textarea><button class="btn teal wide" style="margin-top:10px" id="addSegment">Enregistrer cette étape</button></section><div class="actions"><button class="btn secondary" id="export">⬇️ Exporter mes voyages</button><button class="btn ghost" data-tab="archives">📂 Archives</button></div>`;}
 function buildArchives(){const trips=state.trips;return header('Stockage local','Mes archives','Prépare tes voyages à l’avance et retrouve-les sur ce téléphone.')+`<section class="card"><div class="row"><h2 style="margin:0">Voyages sauvegardés</h2><span class="pill">${trips.length}</span></div>${!trips.length?`<p class="subtitle" style="margin-top:13px">Aucun voyage pour le moment.</p>`:trips.map(t=>`<div class="step"><div class="archive-title">${esc(t.name||t.origin+' → '+t.destination)}</div><p class="meta">${esc(t.origin)} → ${esc(t.destination)} · ${t.segments?.length||0} segments${t.dateTime?' · '+esc(t.dateTime.replace('T',' ')):''}</p><div class="actions"><button class="btn small teal" data-load="${esc(t.id)}">Ouvrir</button><button class="btn small ghost" data-rename="${esc(t.id)}">Renommer</button><button class="btn small secondary" data-clone="${esc(t.id)}">Dupliquer</button></div></div>`).join('')}</section><section class="card"><h2>📦 Sauvegarde et transfert</h2><p class="subtitle">Les archives restent sur ton appareil. Pour changer d'iPhone, exporte le fichier JSON, puis importe-le sur le nouvel appareil.</p><div class="actions"><button class="btn secondary" id="export">⬇️ Exporter</button><button class="btn ghost" id="importButton">⬆️ Importer</button></div><input type="file" id="importFile" accept=".json,application/json" hidden></section>`;}
 function geoLabel(){return state.gps?`Position GPS : ${state.gps.lat.toFixed(5)}, ${state.gps.lon.toFixed(5)} (précision environ ${Math.round(state.gps.accuracy)} m)`:'Position GPS non demandée';}
@@ -145,7 +145,7 @@ async function detectCountry(lat,lon){
 }
 
 function buildProche(){return header('Gratuit · GPS','Proche de moi','Choisis simplement ce que tu cherches. Ta position est récupérée automatiquement.')+`<section class="card"><h2>Que recherches-tu ?</h2><div class="near-grid">${NEAR.map(([k,e,label])=>`<button type="button" class="placebtn ${state.selectedNear===k?'selected':''}" data-near="${k}" aria-pressed="${state.selectedNear===k?'true':'false'}" ${state.gpsBusy?'disabled':''}><span class="emoji">${e}</span>${esc(label)}</button>`).join('')}</div></section>${state.selectedNear?buildNearResult():''}`;}
-// V1.11 : toutes les rubriques utilisent une liste de lieux géolocalisés,
+// V1.12 : toutes les rubriques utilisent une liste de lieux géolocalisés,
 // classés du plus proche au plus éloigné. Google Maps sert à l'itinéraire.
 const PLACE_TAGS={
  bank:['["amenity"~"^(bank|atm)$"]'],
@@ -168,7 +168,7 @@ const PLACE_TAGS={
 const SAFETY_TABS=[['hospital','🏥','Hôpitaux'],['clinic','🚑','Cliniques'],['doctor','🩺','Médecins'],['pharmacy','💊','Pharmacies'],['police','👮','Police']];
 const PLACE_SEARCH_SERVERS=['https://overpass.private.coffee/api/interpreter?data=','https://overpass-api.de/api/interpreter?data=','https://maps.mail.ru/osm/tools/overpass/api/interpreter?data='];
 let nearItems=[],nearLoading=false,nearError=false,nearRequestSerial=0;
-// Safety cache is deliberately isolated from V1.11 (which could contain the wrong city).
+// Safety cache is deliberately isolated from V1.12 (which could contain the wrong city).
 const SAFETY_STORAGE='ludopilot-voyages-safety-v19';
 const safety={busy:false,loading:false,error:'',verified:false,city:'',countryName:'',countryCode:'',services:{},all:[],position:null,storedAt:0,reqId:0,previousCountry:'',previousUpdated:0};
 try{const saved=JSON.parse(localStorage.getItem(SAFETY_STORAGE)||'null');if(saved&&Date.now()-saved.storedAt<7*86400000){
@@ -241,11 +241,23 @@ function routeToPlace(place,mode='walking',kind='near'){
  '&destination='+encodeURIComponent(place.lat.toFixed(6)+','+place.lon.toFixed(6))+'&travelmode='+mode;
 }
 function nearbyList(items,kind){return items.slice(0,10).map((p,i)=>`<div><button type="button" class="near-row" data-place-route="${kind}:${i}"><span><strong>${esc(p.name)}</strong><small>🧭 Itinéraire à pied</small></span><span class="near-distance">${distanceLabel(p.distance)}</span></button></div>`).join('');}
+// Téléphones des établissements : lus automatiquement dans les fiches publiques OpenStreetMap.
+// Aucune liste d'entreprises ni numéros particuliers codés par pays.
+function publicPhone(raw){
+ const v=String(raw||'').replace(/^tel:/i,'').split(/[;,|]/)[0].trim();
+ const digits=v.replace(/\D/g,'');
+ return digits.length>=7&&digits.length<=15&&/^[+0-9(). \/-]+$/.test(v)?v:'';
+}
+function phoneFromTags(tags){
+ const t=tags||{};
+ return ['contact:phone','phone','contact:mobile','mobile','contact:telephone','telephone']
+  .map(k=>publicPhone(t[k])).find(Boolean)||'';
+}
 function safetyPlaceList(items){return items.map((p,i)=>{
  const title=SAFETY_TABS.find(x=>x[0]===p.category),name=title?title[1]+' '+title[2]:'📍 Service';
- const safePhone=p.phone&&/^[+0-9 ()\-]{5,24}$/.test(p.phone)?p.phone:'';
+ const safePhone=publicPhone(p.phone);
  return `<article class="safety-place"><div class="place-heading"><div><div class="place-category">${name}</div><strong>${esc(p.name)}</strong>${p.note?`<p class="place-address">${esc(p.note)}</p>`:''}</div><span class="place-distance">${distanceLabel(p.distance)}</span></div>`+
- `<div class="place-actions">${safety.verified?`<button class="btn teal small" data-place-route="safety:${i}">🧭 Itinéraire</button>`:''}${safePhone?`<a class="btn secondary small" href="tel:${encodeURIComponent(safePhone.replace(/[^+0-9]/g,''))}">📞 Appeler</a>`:''}</div></article>`;
+ `${safePhone?`<p class="place-address">📞 ${esc(safePhone)}</p>`:''}<div class="place-actions">${safety.verified?`<button class="btn teal small" data-place-route="safety:${i}">🧭 Itinéraire</button>`:''}${safePhone?`<a class="btn secondary small" href="tel:${encodeURIComponent(safePhone.replace(/[^+0-9]/g,''))}">📞 Appeler</a>`:''}</div></article>`;
  }).join('');}
 
 function buildNearResult(){const item=NEAR.find(x=>x[0]===state.selectedNear);if(!item)return '';
@@ -356,7 +368,9 @@ function sortSafety(){
   const name=String(p.name||'').trim();if(!name)continue;
   const key=category+'|'+name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'')+'|'+Number(p.lat).toFixed(3)+'|'+Number(p.lon).toFixed(3);
   const knownPlace=known.get(key);
-  if(!knownPlace||distance<knownPlace.distance)known.set(key,{...p,distance,category});
+  if(!knownPlace||(publicPhone(p.phone)&&!publicPhone(knownPlace.phone))||
+   (Boolean(publicPhone(p.phone))===Boolean(publicPhone(knownPlace.phone))&&distance<knownPlace.distance))
+   known.set(key,{...p,distance,category});
  }
  safety.all=[...known.values()].sort((a,b)=>a.distance-b.distance);
 }
@@ -448,10 +462,10 @@ function safetyResultsFromOsm(elements,lat,lon,radius){
    /\b(police station|police precinct|police community|polisi|gendarmerie|polizei|comisaria)\b/i.test(name))category='police';
   if(!category)continue;
   if(category==='police'&&/museum|academy|school|training|hotel|residence|historical/i.test(name))continue;
-  const ph=String(tags['contact:phone']||tags.phone||'').trim().split(/[;,]/)[0].trim();
+  const ph=phoneFromTags(tags);
   const addr=[tags['addr:housenumber'],tags['addr:street'],tags['addr:city']].filter(Boolean).join(' ');
   out[category].push({name,category,lat:a,lon:b,distance,
-   phone:/^[+0-9 ()\-]{5,24}$/.test(ph)?ph:'',note:addr,
+   phone:ph,note:addr,osmType:el.type,osmId:Number(el.id)||0,
    emergency:tags.emergency==='yes'||tags['emergency:ward']==='yes'});
  }
  for(const [key,values] of Object.entries(out)){
@@ -484,12 +498,52 @@ async function findPhotonSafety(lat,lon,onBatch){
     else if(['pharmacy','chemist','drugstore'].includes(osm))cat='pharmacy';
     else if(osm==='police'||osm==='station'&&/police|precinct/i.test(name))cat='police';
     if(!cat||cat!==expected)continue;
-    out[cat].push({name,category:cat,lat:coords[1],lon:coords[0],distance:d,phone:'',note:[p.street,p.city].filter(Boolean).join(', ')});
+    out[cat].push({name,category:cat,lat:coords[1],lon:coords[0],distance:d,phone:phoneFromTags(p.extra||p),osmType:p.osm_type,osmId:Number(p.osm_id)||0,note:[p.street,p.city].filter(Boolean).join(', ')});
    }
    if(typeof onBatch==='function')onBatch(out);
   }catch(_){/* Photon peut être indisponible */}finally{clearTimeout(timer);}
  }
  return out;
+}
+
+// Complément automatique pour les fiches Photon. Le numéro est attaché à l'identifiant
+// OSM EXACT du lieu, jamais déduit d'un nom d'enseigne ou d'une ville.
+async function enrichPhotonPhones(found,onBatch){
+ const pending=[];
+ for(const [category] of SAFETY_TABS)for(const p of found[category]||[]){
+  const t=({N:'node',W:'way',R:'relation',node:'node',way:'way',relation:'relation'})[p.osmType];
+  if(!publicPhone(p.phone)&&t&&Number.isSafeInteger(p.osmId)&&p.osmId>0)
+   pending.push({p,type:t,id:p.osmId});
+ }
+ // Ne jamais multiplier les appels pour une même adresse.
+ const chosen=new Map();
+ for(const p of pending.sort((a,b)=>a.p.distance-b.p.distance)){
+  const key=p.type+':'+p.id;
+  if(!chosen.has(key)&&chosen.size<45)chosen.set(key,p);
+ }
+ if(!chosen.size)return;
+ const groups={node:[],way:[],relation:[]};
+ for(const v of chosen.values())groups[v.type].push(v);
+ let updated=false;
+ await Promise.all(Object.entries(groups).filter(([,a])=>a.length).map(async ([type,group])=>{
+  const plural={node:'nodes',way:'ways',relation:'relations'}[type];
+  const ids=group.map(p=>p.id).join(',');
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),5500);
+  try{
+   const url='https://api.openstreetmap.org/api/0.6/'+plural+'?'+plural+'='+ids;
+   const r=await fetch(url,{signal:controller.signal,headers:{Accept:'application/json'}});
+   if(!r.ok) return;
+   const j=await r.json();if(!Array.isArray(j.elements))return;
+   for(const e of j.elements){
+    const p=chosen.get(type+':'+e.id)?.p;
+    if(!p||!e.tags)continue;
+    const num=phoneFromTags(e.tags);
+    if(num&&!publicPhone(p.phone)){p.phone=num;updated=true;}
+   }
+  }catch(_){/* Impossible de publier un numéro que la source ne fournit pas. */}
+  finally{clearTimeout(timer);}
+ }));
+ if(updated&&typeof onBatch==='function')onBatch(found);
 }
 async function findSafetyCategories(lat,lon,onBatch){
  const categories=SAFETY_TABS.map(x=>x[0]);
@@ -520,6 +574,7 @@ async function findSafetyCategories(lat,lon,onBatch){
   }catch(_){/* Conserver la liste en cours */}
  }
  if(!successful)throw Error('Services cartographiques temporairement indisponibles');
+ await enrichPhotonPhones(found,onBatch);
  return found;
 }
 
@@ -586,7 +641,7 @@ function buildQuestion(){
  const title=nearMode?`📍 ${item?item[2]:'Autour de moi'}`:`${s.from} → ${s.to}`;
  return header('Sans crédit API','💬 Questions prêtes pour ChatGPT',title)+`<section class="card"><h2>Choisis une question</h2><p class="smallprint">Une question adaptée au ${nearMode?'thème sélectionné':'transport de cette étape'} suffit. Elle est préparée avec ${nearMode?'tes coordonnées GPS':'les détails du segment'}.</p>${qs.map((q,i)=>`<button type="button" class="btn ghost questionbtn ${state.questionSelected===i?'selected':''}" data-suggest="${i}" aria-pressed="${state.questionSelected===i?'true':'false'}">${state.questionSelected===i?'✓':'💬'} ${esc(q)}</button>`).join('')}<div class="divider"></div><label for="freeQuestion">✍️ Ou écris ta propre question</label><textarea class="field" id="freeQuestion" rows="2" placeholder="Ex. Je cherche l'option la moins chère sans changer trois fois de transport…">${esc(state.questionFree)}</textarea><button class="btn secondary wide" id="prepareFreeQuestion" style="margin-top:8px">Préparer ma question libre</button><div class="divider"></div><p class="callout">${esc(state.questionSelected===-1?state.questionFree.trim():qs[state.questionSelected]||"Question prête")}</p><textarea id="questionText" tabindex="-1" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0">${esc(state.questionText)}</textarea><div class="actions"><button class="btn teal" id="copyQuestion">📋 Copier</button><a class="btn secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Ouvrir ChatGPT ↗</a></div><p class="question-tip">Choisis, copie, puis colle dans ChatGPT.</p></section><button class="btn ghost" data-tab="${nearMode?'proche':'etapes'}">← Retour</button>`;
 }
-function buildReglages(){return header('Paramètres','⚙️ Réglages','Les fonctions gratuites restent disponibles sans clé ni abonnement supplémentaire.')+`<section class="card"><h2>💸 Maîtriser les coûts API</h2><div class="callout">Google Maps, Archives, GPS et questions via ton ChatGPT personnel ne consomment pas de crédits API LudoPilot.</div><label class="line-check"><input type="checkbox" id="paidAllowed" ${state.paidAllowed?'checked':''}><span><strong>Autoriser les recherches intelligentes payantes</strong><br><span class="smallprint">Désactivé par défaut. Une confirmation sera également demandée avant chaque recherche.</span></span></label>${field('worker','Adresse du moteur Cloudflare (facultatif)',state.worker,'https://…workers.dev','url')}<p class="smallprint">Ne saisis jamais de clé secrète OpenAI ou Google dans ce site public. Un Worker partagé publiquement devrait être protégé côté serveur contre les appels non autorisés.</p><button class="btn secondary" id="saveWorker">Enregistrer cette adresse</button></section><section class="card"><h2>📂 Archives</h2><div class="actions"><button class="btn secondary" id="export">Exporter JSON</button><button class="btn ghost" id="importButton">Importer JSON</button></div><input id="importFile" type="file" accept=".json,application/json" hidden><p class="smallprint">Les sauvegardes restent sur cet appareil. Tu peux les exporter vers Fichiers ou iCloud.</p></section><section class="card"><h2>📴 Mode hors connexion</h2><p class="smallprint">Les voyages et les fiches d’urgence enregistrés sont consultables hors ligne après chargement de l'application. Les cartes en ligne, les suggestions de lieux, les recherches et ChatGPT nécessitent Internet. Vérifie toujours les horaires des ferries, bus et vols.</p></section><p class="smallprint">LudoPilot Voyages V1.11 · Site GitHub Pages · Données personnelles stockées localement.</p>`;}
+function buildReglages(){return header('Paramètres','⚙️ Réglages','Les fonctions gratuites restent disponibles sans clé ni abonnement supplémentaire.')+`<section class="card"><h2>💸 Maîtriser les coûts API</h2><div class="callout">Google Maps, Archives, GPS et questions via ton ChatGPT personnel ne consomment pas de crédits API LudoPilot.</div><label class="line-check"><input type="checkbox" id="paidAllowed" ${state.paidAllowed?'checked':''}><span><strong>Autoriser les recherches intelligentes payantes</strong><br><span class="smallprint">Désactivé par défaut. Une confirmation sera également demandée avant chaque recherche.</span></span></label>${field('worker','Adresse du moteur Cloudflare (facultatif)',state.worker,'https://…workers.dev','url')}<p class="smallprint">Ne saisis jamais de clé secrète OpenAI ou Google dans ce site public. Un Worker partagé publiquement devrait être protégé côté serveur contre les appels non autorisés.</p><button class="btn secondary" id="saveWorker">Enregistrer cette adresse</button></section><section class="card"><h2>📂 Archives</h2><div class="actions"><button class="btn secondary" id="export">Exporter JSON</button><button class="btn ghost" id="importButton">Importer JSON</button></div><input id="importFile" type="file" accept=".json,application/json" hidden><p class="smallprint">Les sauvegardes restent sur cet appareil. Tu peux les exporter vers Fichiers ou iCloud.</p></section><section class="card"><h2>📴 Mode hors connexion</h2><p class="smallprint">Les voyages et les fiches d’urgence enregistrés sont consultables hors ligne après chargement de l'application. Les cartes en ligne, les suggestions de lieux, les recherches et ChatGPT nécessitent Internet. Vérifie toujours les horaires des ferries, bus et vols.</p></section><p class="smallprint">LudoPilot Voyages V1.12 · Site GitHub Pages · Données personnelles stockées localement.</p>`;}
 function render(){const app=byId('app');app.innerHTML=({voyage:buildVoyage,etapes:buildEtapes,archives:buildArchives,proche:buildProche,aide:buildAide,chauffeur:buildChauffeur,question:buildQuestion,reglages:buildReglages}[state.tab]||buildVoyage)();document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.tab));if(app.querySelector('[data-money]')){updateMoneyNodes();ensureFxRates();}}
 function createJourney(){const d={...state.form,origin:state.form.origin.trim(),destination:state.form.destination.trim()};if(!d.origin||!d.destination){toast('Indique le départ et l’arrivée.');return;}const t=newTrip(d);state.trips.unshift(t);state.activeId=t.id;save();setTab('etapes');toast('Voyage enregistré. Ajoute ses étapes.');}
 function addSegment(){const t=active();if(!t)return;const from=byId('segFrom')?.value.trim(),to=byId('segTo')?.value.trim();if(!from||!to){toast('Indique les deux lieux de l’étape.');return;}if(from.toLowerCase()===to.toLowerCase()){toast('Départ et arrivée identiques.');return;}if(t.segments.length>=16){toast('Maximum 16 segments.');return;}const prev=t.segments.at(-1);if(prev&&prev.to.trim().toLowerCase()!==from.toLowerCase()&&!confirm('Correspondance non raccordée avec l’étape précédente. Continuer ?'))return;t.segments.push(normalizeSegment({from,to,mode:byId('segMode').value,service:byId('segService').value.trim(),notes:byId('segNotes').value.trim()},t.segments.length));save();render();toast('Étape enregistrée.');}
