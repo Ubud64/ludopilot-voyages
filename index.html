@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="LudoPilot">
 <meta name="description" content="LudoPilot Voyages, assistant de voyage international, GPS par étape et services proches.">
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./icon-180.png">
-<title>LudoPilot Voyages V1.15</title>
+<title>LudoPilot Voyages V1.16</title>
 <style>
 :root{color-scheme:light;--ink:#17364d;--muted:#627588;--bg:#eef4f7;--card:#fff;--blue:#086fab;--line:#dce5eb;--accent:#0d8c86;--red:#a93439}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.48 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;padding-bottom:calc(88px + env(safe-area-inset-bottom))}button,input,select,textarea{font:inherit}button{cursor:pointer}
@@ -51,10 +51,33 @@ details > summary{cursor:pointer;font-weight:800;padding:8px 0}
 .emergency-personalization summary{font-size:13px;color:var(--muted)}
 .emergency-personalization label{display:flex;gap:8px;align-items:center;font-weight:650}
 @media(max-width:365px){.emergency-choices button{font-size:11px}}
+
+/* V1.16 : un seul écran de secours lisible, sans répétition. */
+.help-simplified .emergency-top-call{display:block;text-align:center;color:#fff;background:#b62e39;border-radius:13px;padding:13px 12px;font-size:17px;font-weight:900;text-decoration:none;min-height:50px;margin:0 0 14px}
+.help-simplified .emergency-top-call:focus-visible,.help-simplified button:focus-visible{outline:3px solid #087e77;outline-offset:3px}
+.help-simplified .emergency-unavailable{font-size:13px;color:#934034;background:#fff2e5;padding:9px 11px;border-radius:9px;margin:0 0 12px}
+.help-simplified .emergency-choice-label{font-size:14px;font-weight:850;margin-bottom:7px}
+.help-simplified .emergency-choices{margin:0 0 13px;gap:8px}
+.help-simplified .emergency-choices button{font-size:13px;min-height:54px;border-radius:12px}
+.help-simplified .emergency-show{background:#f1f8fa;margin:10px 0 0;padding:15px;border-radius:14px}
+.help-simplified .emergency-show strong{font-size:clamp(21px,5.6vw,27px);line-height:1.32}
+.help-simplified .emergency-show .emergency-french{font-size:13px;line-height:1.4;margin-top:9px}
+.help-simplified .emergency-custom{margin:0 0 12px}
+.help-simplified .emergency-custom textarea{min-height:74px}
+.help-simplified .emergency-custom label{font-size:13px;margin:0 0 5px}
+.help-simplified .emergency-custom .btn{margin-top:8px}
+.help-simplified .emergency-custom details{margin-top:9px;border:0}
+.help-simplified .emergency-custom details summary{font-weight:650;font-size:12px;color:var(--muted)}
+.help-simplified .emergency-custom details textarea{margin-top:6px}
+.help-simplified .emergency-personalization{margin-top:11px;padding-top:5px}
+.help-simplified .emergency-profile-alert{font-size:12px;color:#97322c;padding:8px 10px;border-radius:9px;background:#fff4eb;margin-top:9px}
+.help-simplified .emergency-micro{font-size:11px;color:var(--muted);margin:6px 0 0}
+.help-simplified .emergency-status{margin:8px 0 0;font-size:12px}
+@media(max-width:365px){.help-simplified .emergency-choices button{font-size:12px;padding:6px 2px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="top-line"><div><div class="brand">🧭 LudoPilot <span style="color:#66d7cf">Voyages</span></div><div class="subbrand">V1.15 · SIMPLE ET ÉCONOMIQUE</div></div><div class="top-actions"><button id="helpTop" class="headbtn" aria-label="Aide-moi">🆘</button><button id="settingsTop" class="headbtn" aria-label="Réglages">⚙️</button></div></div></header>
+<header class="top"><div class="top-line"><div><div class="brand">🧭 LudoPilot <span style="color:#66d7cf">Voyages</span></div><div class="subbrand">V1.16 · SIMPLE ET ÉCONOMIQUE</div></div><div class="top-actions"><button id="helpTop" class="headbtn" aria-label="Aide-moi">🆘</button><button id="settingsTop" class="headbtn" aria-label="Réglages">⚙️</button></div></div></header>
 <main id="app"></main>
 <nav id="tabs" aria-label="Navigation"><button data-tab="voyage"><span class="icon">🧭</span>Voyage</button><button data-tab="etapes"><span class="icon">🗺️</span>Étapes</button><button data-tab="archives"><span class="icon">📂</span>Archives</button><button data-tab="proche"><span class="icon">📍</span>Proche</button><button data-tab="aide"><span class="icon">🆘</span>Aide-moi</button></nav>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -139,7 +162,7 @@ function chooser(){return state.trips.length?`<label for="tripChooser">Voyage s�
 function countries(){return `<label for="country">🌐 Pays dans lequel tu voyages</label><select id="country" class="field">${Object.entries(COUNTRY).map(([k,v])=>`<option value="${k}" ${k===state.country?'selected':''}>${v.label}</option>`).join('')}</select>`;}
 function normalizeSegment(s,i){return {index:i+1,from:String(s?.from||''),to:String(s?.to||''),mode:String(s?.mode||'other'),modeLabel:String(s?.modeLabel||MODES[s?.mode]||'Transport'),fromPlaceName:String(s?.fromPlaceName||''),toPlaceName:String(s?.toPlaceName||''),toAddress:String(s?.toAddress||''),toCity:String(s?.toCity||''),toCountry:String(s?.toCountry||''),fromLatitude:validPoint(s?.fromLatitude,s?.fromLongitude)?Number(s.fromLatitude):null,fromLongitude:validPoint(s?.fromLatitude,s?.fromLongitude)?Number(s.fromLongitude):null,toLatitude:validPoint(s?.toLatitude,s?.toLongitude)?Number(s.toLatitude):null,toLongitude:validPoint(s?.toLatitude,s?.toLongitude)?Number(s.toLongitude):null,service:String(s?.service||s?.serviceDescription||''),notes:String(s?.notes||''),facts:Array.isArray(s?.facts)?s.facts.slice(0,10).map(f=>typeof f==='object'?{text:String(f.text||''),sourceURL:String(f.sourceURL||'')}: {text:String(f)}):[],questions:Array.isArray(s?.questions)?s.questions.slice(0,5).map(String):[]};}
 function newTrip(d){return {id:uid(),created:new Date().toISOString(),name:d.name||'',origin:d.origin,destination:d.destination,via:d.via||'',dateTime:d.dateTime||'',preference:d.preference||'surface',summary:d.summary||'',price:d.price||'',duration:d.duration||'',warnings:d.warnings||[],segments:d.segments||[],currentIndex:0,complete:false};}
-function buildVoyage(){const t=active(),f=state.form;return header('Préparer · V1.15','Où veux-tu aller ?','Tes adresses restent enregistrées même après une recherche.')+`<section class="card">${field('origin','📍 Départ exact',f.origin,'Hôtel, port, aéroport, ville…')}${field('destination','🏁 Arrivée exacte',f.destination,'Ex. Siquijor ou Chiang Mai')}${field('via','↪ Passage obligatoire (facultatif)',f.via,'Ex. Cebu, Bangkok')}<div class="grid2"><div>${field('dateTime','📅 Date locale',f.dateTime,'','datetime-local')}</div><div><label for="preference">Mode</label><select class="field" id="preference"><option value="surface" ${f.preference==='surface'?'selected':''}>Sans avion</option><option value="air" ${f.preference==='air'?'selected':''}>Avec avion</option></select></div></div><p class="smallprint">💡 Suggestions de lieux gratuites quand tu écris au moins 4 caractères. Vérifie toujours la bonne adresse.</p><div class="actions"><button class="btn secondary" id="createJourney">➕ Créer manuellement</button><button class="btn teal" id="searchJourney" ${state.busy?'disabled':''}>${state.busy?'⏳ Recherche…':'🔎 Recherche intelligente'}</button></div>${state.busy?`<div class="status" role="status">⏳ Recherche en cours. Laisse cet écran ouvert. Cela peut prendre jusqu'à quelques minutes.</div>`:''}${state.notice?`<div class="${state.error?'callout error':'status'}" role="status">${esc(state.notice)}</div>`:''}<div class="callout warning">La recherche intelligente utilise l’ancien moteur API et peut consommer tes crédits. Les autres fonctions sont gratuites. Active-la dans Réglages seulement si tu le souhaites.</div></section>${t?`<section class="card">${chooser()}<h2 style="margin-top:12px">${esc(t.origin)} → ${esc(t.destination)}</h2><p class="subtitle">${t.segments?.length||0} segments · ${esc(t.duration||'Durée à vérifier')} · ${t.price?moneyHtml(t.price):'Prix à vérifier'}</p><button class="btn wide" data-tab="etapes">Voir cet itinéraire →</button></section>`:''}<p class="smallprint">Vérifie les horaires et tarifs des transporteurs : aucun trajet aérien ou maritime n'est confirmé automatiquement à la réservation.</p>`;}
+function buildVoyage(){const t=active(),f=state.form;return header('Préparer · V1.16','Où veux-tu aller ?','Tes adresses restent enregistrées même après une recherche.')+`<section class="card">${field('origin','📍 Départ exact',f.origin,'Hôtel, port, aéroport, ville…')}${field('destination','🏁 Arrivée exacte',f.destination,'Ex. Siquijor ou Chiang Mai')}${field('via','↪ Passage obligatoire (facultatif)',f.via,'Ex. Cebu, Bangkok')}<div class="grid2"><div>${field('dateTime','📅 Date locale',f.dateTime,'','datetime-local')}</div><div><label for="preference">Mode</label><select class="field" id="preference"><option value="surface" ${f.preference==='surface'?'selected':''}>Sans avion</option><option value="air" ${f.preference==='air'?'selected':''}>Avec avion</option></select></div></div><p class="smallprint">💡 Suggestions de lieux gratuites quand tu écris au moins 4 caractères. Vérifie toujours la bonne adresse.</p><div class="actions"><button class="btn secondary" id="createJourney">➕ Créer manuellement</button><button class="btn teal" id="searchJourney" ${state.busy?'disabled':''}>${state.busy?'⏳ Recherche…':'🔎 Recherche intelligente'}</button></div>${state.busy?`<div class="status" role="status">⏳ Recherche en cours. Laisse cet écran ouvert. Cela peut prendre jusqu'à quelques minutes.</div>`:''}${state.notice?`<div class="${state.error?'callout error':'status'}" role="status">${esc(state.notice)}</div>`:''}<div class="callout warning">La recherche intelligente utilise l’ancien moteur API et peut consommer tes crédits. Les autres fonctions sont gratuites. Active-la dans Réglages seulement si tu le souhaites.</div></section>${t?`<section class="card">${chooser()}<h2 style="margin-top:12px">${esc(t.origin)} → ${esc(t.destination)}</h2><p class="subtitle">${t.segments?.length||0} segments · ${esc(t.duration||'Durée à vérifier')} · ${t.price?moneyHtml(t.price):'Prix à vérifier'}</p><button class="btn wide" data-tab="etapes">Voir cet itinéraire →</button></section>`:''}<p class="smallprint">Vérifie les horaires et tarifs des transporteurs : aucun trajet aérien ou maritime n'est confirmé automatiquement à la réservation.</p>`;}
 function buildEtapes(){const t=active();if(!t)return header('Navigation','Mes étapes')+`<section class="card"><p>Aucun voyage sélectionné.</p><button class="btn" data-tab="voyage">Préparer mon voyage</button></section>`;const ss=Array.isArray(t.segments)?t.segments:[],idx=Math.min(Math.max(0,t.currentIndex||0),Math.max(0,ss.length-1));return header('Navigation','Étape par étape',`${t.origin} → ${t.destination}`)+chooser()+`<section class="card"><h2>${esc(t.name||t.origin+' → '+t.destination)}</h2>${t.summary?`<p>${moneyHtml(t.summary)}</p>`:''}<div class="row"><span class="pill">${ss.length} segments</span><span class="meta">${esc(t.duration||'Durée à confirmer')}</span></div>${t.price?`<p class="meta">Coût estimé : ${moneyHtml(t.price)}</p>`:''}${Array.isArray(t.warnings)&&t.warnings.length?`<div class="callout warning">${t.warnings.map(moneyHtml).join('<div class="divider"></div>')}</div>`:''}${ss.length?ss.map((s,i)=>`<article class="step ${idx===i?'active':''}"><div class="row"><span class="pill">${i+1} / ${ss.length}</span><span class="meta">${esc(MODES[s.mode]||s.modeLabel||'Transport')}</span></div><div class="step-title">${esc(s.from)} → ${esc(s.to)}</div>${s.service?`<p class="meta">${moneyHtml(s.service)}</p>`:''}${s.notes?`<p class="meta">${moneyHtml(s.notes)}</p>`:''}${Array.isArray(s.facts)&&s.facts.length?`<ul class="facts">${s.facts.map(x=>`<li>${moneyHtml(x.text||x)}</li>`).join('')}</ul>`:''}<div class="actions"><button class="btn small ${idx===i?'teal':'ghost'}" data-choose="${i}">${idx===i?'✓ Active':'Choisir'}</button><button class="btn small secondary" data-map="${i}">🧭 GPS</button><button class="btn small secondary" data-driver="${i}">🚕 Chauffeur</button><button class="btn small ghost" data-question="${i}">💬 Questions</button></div>${['ferry','boat','plane'].includes(s.mode)?`<p class="smallprint">Pour un ${s.mode==='plane'?'vol':'bateau'}, le GPS ouvre le lieu d'arrivée sans inventer de route terrestre.</p>`:''}</article>`).join(''):`<div class="callout">Aucune étape pour le moment. Ajoute chaque véhicule ou correspondance séparément.</div>`}<p class="smallprint" id="fxInfo">💶 Conversions indicatives en euros, hors frais bancaires.</p>${ss.length?`<div class="actions"><button class="btn ghost" id="prevSegment" ${idx===0?'disabled':''}>← Précédente</button><button class="btn teal" id="nextSegment">${idx===ss.length-1?'✓ Terminé':'Suivante →'}</button></div>`:''}</section><section class="card"><h2>➕ Ajouter une étape</h2><p class="subtitle">Un véhicule = une étape. Un changement de ferry, taxi ou bus = nouvelle étape.</p>${field('segFrom','Départ',ss.length?ss.at(-1).to:t.origin,'Lieu précis')}${field('segTo','Arrivée','','Terminal, port, hôtel…')}<label for="segMode">Transport</label><select class="field" id="segMode">${Object.entries(MODES).map(([v,s])=>`<option value="${v}" ${v==='taxi'?'selected':''}>${s}</option>`).join('')}</select>${field('segService','Ligne ou service (facultatif)','','Ex. ferry, Grab, numéro du vol')}<label for="segNotes">Notes pratiques</label><textarea class="field" id="segNotes" placeholder="Prix, horaires, repères…"></textarea><button class="btn teal wide" style="margin-top:10px" id="addSegment">Enregistrer cette étape</button></section><div class="actions"><button class="btn secondary" id="export">⬇️ Exporter mes voyages</button><button class="btn ghost" data-tab="archives">📂 Archives</button></div>`;}
 function buildArchives(){const trips=state.trips;return header('Stockage local','Mes archives','Prépare tes voyages à l’avance et retrouve-les sur ce téléphone.')+`<section class="card"><div class="row"><h2 style="margin:0">Voyages sauvegardés</h2><span class="pill">${trips.length}</span></div>${!trips.length?`<p class="subtitle" style="margin-top:13px">Aucun voyage pour le moment.</p>`:trips.map(t=>`<div class="step"><div class="archive-title">${esc(t.name||t.origin+' → '+t.destination)}</div><p class="meta">${esc(t.origin)} → ${esc(t.destination)} · ${t.segments?.length||0} segments${t.dateTime?' · '+esc(t.dateTime.replace('T',' ')):''}</p><div class="actions"><button class="btn small teal" data-load="${esc(t.id)}">Ouvrir</button><button class="btn small ghost" data-rename="${esc(t.id)}">Renommer</button><button class="btn small secondary" data-clone="${esc(t.id)}">Dupliquer</button></div></div>`).join('')}</section><section class="card"><h2>📦 Sauvegarde et transfert</h2><p class="subtitle">Les archives restent sur ton appareil. Pour changer d'iPhone, exporte le fichier JSON, puis importe-le sur le nouvel appareil.</p><div class="actions"><button class="btn secondary" id="export">⬇️ Exporter</button><button class="btn ghost" id="importButton">⬆️ Importer</button></div><input type="file" id="importFile" accept=".json,application/json" hidden></section>`;}
 function geoLabel(){return state.gps?`Position GPS : ${state.gps.lat.toFixed(5)}, ${state.gps.lon.toFixed(5)} (précision environ ${Math.round(state.gps.accuracy)} m)`:'Position GPS non demandée';}
@@ -385,37 +408,50 @@ function emergencyCurrentText(){
  return {local:lng.lang==='fr'?fr:(translated?emergencyMessage.customLocal.trim():''),fr,
   label:lng.label,ok:lng.lang==='fr'||(translated&&!!emergencyMessage.customLocal.trim())};
 }
-function buildEmergencyMessages(){
- const msg=emergencyCurrentText(),mode=emergencyMessage.mode;
- const custom=mode==='personnel';
- return `<section class="card" id="emergencyMessages" aria-label="Message d'urgence"><h2>🗣️ Mon message d’urgence</h2>`+
- `<div class="emergency-choices" role="group" aria-label="Type de secours">`+
- [['medical','🚑 Médical'],['agression','🚨 Agression / danger'],['personnel','✍️ Mon message']]
+function buildEmergencyMessages(emergency,allerg){
+ const msg=emergencyCurrentText(),mode=emergencyMessage.mode,custom=mode==='personnel';
+ const primary=emergency.length?emergency[0]:null;
+ const knownPhone=primary&&/^\+?[\d\s-]{2,22}$/.test(String(primary[1]));
+ const emergencyCall=knownPhone?
+  `<a class="emergency-top-call" href="tel:${encodeURIComponent(primary[1])}" aria-label="Appeler les secours au ${esc(primary[1])}">📞 Appeler les secours · ${esc(primary[1])}</a>`:
+  '<p class="emergency-unavailable">Numéro local non confirmé. Vérifie les secours du pays.</p>';
+ const otherNumbers=emergency.slice(1).map(([label,phone])=>`<a href="tel:${encodeURIComponent(phone)}">${esc(label)} · ${esc(phone)}</a>`).join(' · ');
+ const preview=msg.local||(custom?msg.fr:'');
+ const localLabel=msg.local?msg.label:'Français';
+ const extraNote=custom&&!msg.ok?(msg.fr?'Traduction non enregistrée : le français reste affiché.':'Écris ton message pour le montrer.'):
+  custom?'Traduction enregistrée : vérifie-la avant de la montrer.':'';
+ return `<section class="card help-simplified" id="emergencyMessages" aria-label="Message et appel d’urgence">`+
+ emergencyCall+
+ (otherNumbers?`<details class="emergency-personalization"><summary>Autres numéros d’urgence</summary><p class="smallprint">${otherNumbers}</p></details>`:'')+
+ `<div class="emergency-choice-label">Quelle est la situation ?</div>`+
+ `<div class="emergency-choices" role="group" aria-label="Situation d’urgence">`+
+ [['medical','🚑 Médical'],['agression','🚨 Danger'],['personnel','✍️ Autre']]
  .map(([v,label])=>`<button type="button" data-emergency-mode="${v}" class="${mode===v?'active':''}" aria-pressed="${mode===v?'true':'false'}">${label}</button>`).join('')+
  `</div>`+
- (custom?`<div class="emergency-custom"><label for="customEmergencyFr">Mon message en français</label>`+
- `<textarea class="field" id="customEmergencyFr" rows="2" maxlength="500" placeholder="Écris ton message à l'avance…">${esc(emergencyMessage.customFr)}</textarea>`+
- `<label for="customEmergencyLocal">Traduction à montrer · ${esc(msg.label)} (modifiable)</label>`+
- `<textarea class="field" id="customEmergencyLocal" rows="2" maxlength="1000" placeholder="Traduction à enregistrer pour la consultation hors connexion…">${esc(msg.local)}</textarea>`+
- `<button class="btn secondary small" type="button" id="translateEmergency" ${emergencyMessage.busy?'disabled':''}>${emergencyMessage.busy?'⏳ Traduction…':'🌍 Traduire en ligne'}</button>`+
- `<p class="smallprint">Le texte est envoyé à un service de traduction seulement si tu appuies sur « Traduire ».</p>`+
- (emergencyMessage.error?`<p class="callout warning" role="status">${esc(emergencyMessage.error)}</p>`:'')+
+ (custom?`<div class="emergency-custom"><label for="customEmergencyFr">Ton message en français</label>`+
+ `<textarea class="field" id="customEmergencyFr" rows="2" maxlength="500" placeholder="Décris ce dont tu as besoin…">${esc(emergencyMessage.customFr)}</textarea>`+
+ `<button class="btn secondary small" type="button" id="translateEmergency" ${emergencyMessage.busy?'disabled':''}>${emergencyMessage.busy?'⏳ Traduction…':'🌐 Traduire'}</button>`+
+ `<details><summary>Corriger la traduction</summary><label for="customEmergencyLocal">Traduction · ${esc(msg.label)}</label>`+
+ `<textarea class="field" id="customEmergencyLocal" rows="2" maxlength="1000" placeholder="Traduction vérifiée à enregistrer…">${esc(msg.local)}</textarea></details>`+
+ (emergencyMessage.error?`<p class="emergency-status" role="status">${esc(emergencyMessage.error)}</p>`:'')+
  `</div>`:'')+
- `<div class="emergency-show" aria-live="polite"><div class="smallprint">À MONTRER · ${esc(msg.label)}${!safety.verified?' · position non confirmée':''}</div>`+
- `<strong id="emergencyPreviewLocal">${esc(msg.local|| (custom?'Traduction non enregistrée':'Message indisponible'))}</strong>`+
- `<div class="emergency-french" id="emergencyPreviewFr">${esc(msg.fr)}</div>`+
- `<p class="smallprint" id="emergencyPreviewNote" style="${custom&&!msg.ok?'':'display:none'}">Prépare la traduction avant le départ ; le français reste visible sans connexion.</p>`+
+ `<div class="emergency-show" aria-live="polite"><div class="smallprint">À MONTRER · <span id="emergencyPreviewLang">${esc(localLabel)}</span></div>`+
+ `<strong id="emergencyPreviewLocal">${esc(preview||'Écris ton message ci-dessus.')}</strong>`+
+ `<div class="emergency-french" id="emergencyPreviewFr" style="${msg.local&&msg.local!==msg.fr?'':'display:none'}">${esc(msg.fr)}</div>`+
+ `<p class="emergency-micro" id="emergencyPreviewNote" style="${extraNote?'':'display:none'}">${esc(extraNote)}</p>`+
  `</div>`+
- (msg.local?`<button class="btn ghost small" type="button" id="copyEmergencyMessage">📋 Copier le message</button>`:'')+
+ (emergencyMessage.showAllergy?`<div class="emergency-profile-alert">⚠️ Allergie abeilles / guêpes${mode==='medical'&&allerg?` · <strong>${esc(allerg)}</strong>`:''}</div>`:'')+
  `<details class="emergency-personalization"><summary>⚙️ Ma fiche de secours</summary>`+
  `<label><input type="checkbox" id="showBeeAllergy" ${emergencyMessage.showAllergy?'checked':''}> Afficher mon allergie aux abeilles / guêpes</label>`+
  `</details></section>`;
 }
 function updateEmergencyPreview(){
- const msg=emergencyCurrentText(),local=byId('emergencyPreviewLocal'),fr=byId('emergencyPreviewFr'),note=byId('emergencyPreviewNote');
- if(local)local.textContent=msg.local||'Traduction non enregistrée';
- if(fr)fr.textContent=msg.fr;
- if(note)note.style.display=msg.ok?'none':'';
+ const msg=emergencyCurrentText(),local=byId('emergencyPreviewLocal'),fr=byId('emergencyPreviewFr'),note=byId('emergencyPreviewNote'),lng=byId('emergencyPreviewLang');
+ if(lng)lng.textContent=msg.local?msg.label:'Français';
+ if(local)local.textContent=msg.local||msg.fr||'Écris ton message ci-dessus.';
+ if(fr){fr.textContent=msg.fr;fr.style.display=msg.local&&msg.local!==msg.fr?'':'none';}
+ if(note){note.textContent=emergencyMessage.mode==='personnel'?(msg.ok?'Traduction enregistrée : vérifie-la avant de la montrer.':(msg.fr?'Traduction non enregistrée : le français reste affiché.':'Écris ton message pour le montrer.')):'';
+ note.style.display=emergencyMessage.mode==='personnel'?'':'none';}
 }
 async function translateEmergencyMessage(){
  const fr=emergencyMessage.customFr.trim();
@@ -727,29 +763,22 @@ function appleSafetySearch(q){
  return 'https://maps.apple.com/?q='+encodeURIComponent(q)+'&sll='+p.lat.toFixed(6)+','+p.lon.toFixed(6)+'&z=14';
 }
 function buildAide(){
- const fallback=COUNTRY[safety.previousCountry]||null;
  const current=COUNTRY[safety.countryCode]||COUNTRY.OTHER;
  const title=safety.verified?`${safety.city?safety.city+' · ':''}${safety.countryName||current.label}`:
   (safety.busy||safety.loading?'📍 Localisation en cours…':'Pays non confirmé');
- const emergency=safety.verified?current.emergencies:(fallback&&Date.now()-safety.previousUpdated<6*3600000?fallback.emergencies:[]);
+ const emergency=safety.verified?current.emergencies:[];
  const first=safetyPhrases();const allerg=first[1]?.find(x=>/allerg|piqûres/i.test(x[1]))?.[0]||'I am allergic to bee and wasp stings.';
  const appLinks=[['hospital emergency room','🏥 Hôpitaux'],['medical clinic','🚑 Cliniques'],['pharmacy','💊 Pharmacies'],['police station','👮 Police']];
  return header('Secours en voyage','🆘 Aide-moi',title)+
- `<section class="card help-emergency"><h2>📞 Appel d’urgence</h2>`+
- (!safety.verified&&emergency.length?'<p style="color:white;font-size:12px">Dernier pays connu : à confirmer</p>':'')+
- (emergency.length?emergency.map(([label,phone])=>`<a href="tel:${encodeURIComponent(phone)}" aria-label="${esc(label)} ${esc(phone)}">${esc(label)} · ${esc(phone)}</a>`).join(''):
-  '<p>Localisation en cours. En danger immédiat, appelle les secours locaux.</p>')+'</section>'+
- (emergencyMessage.showAllergy?`<div class="safety-alert"><strong>⚠️ Allergie : piqûres d’abeilles / guêpes</strong><span class="local-phrase">${esc(safety.verified?allerg:'I am allergic to bee and wasp stings.')}</span><small>Réaction grave : appelle les secours immédiatement. Adrénaline auto-injectable si prescrite.</small></div>`: '')+
- buildEmergencyMessages()+
- `<section class="card" aria-label="Phrases de secours à montrer"><h2>🗣️ Phrases à montrer · ${esc(first[0])}</h2>${first[1].filter(([,fr])=>emergencyMessage.showAllergy||!/allerg|piqûres/i.test(fr)).map(([local,fr])=>`<div class="help-phrase"><strong>${esc(local)}</strong><small>${esc(fr)}</small></div>`).join('')}</section>`+
- `<section class="card"><h2>📍 Secours autour de moi</h2>`+
+ buildEmergencyMessages(emergency,safety.verified?allerg:'')+
+ `<section class="card"><h2>📍 Secours à proximité</h2>`+
  (safety.busy||safety.loading?'<p class="subtitle">📍 Recherche automatique en cours…</p>':'')+
- (safety.all.length?`<p class="smallprint">${safety.verified?safety.all.length+' lieux répertoriés, triés du plus proche au plus éloigné.':'⚠️ Ancienne position enregistrée : ne pas l’utiliser pour un trajet.'}</p>`+safetyPlaceList(safety.all):'')+
+ (safety.all.length?`<p class="smallprint">${safety.verified?safety.all.length+' lieux, du plus proche au plus éloigné':'⚠️ Ancienne position enregistrée : ne pas l’utiliser pour un trajet.'}</p>`+safetyPlaceList(safety.all):'')+
  (safety.error?`<p class="callout warning" role="status">${esc(safety.error)}</p>`:'')+
  (!safety.loading&&!safety.busy&&!safety.all.length?'<p class="callout warning">Aucun service local vérifié trouvé. Utilise Plans ou appelle les secours.</p>':'')+
  (safety.verified&&safety.mapCount===0&&!safety.loading&&!safety.error?'<p class="callout warning">Liste partielle : les services cartographiques n’ont fourni aucun nouveau lieu.</p>':'')+
- (safety.verified?`<h3>🗺️ Recherche complémentaire dans Plans</h3><div class="safety-quicklinks">${appLinks.map(([q,t])=>`<a class="btn secondary small" href="${appleSafetySearch(q)}" target="_blank" rel="noopener noreferrer">${t}</a>`).join('')}</div>`:'')+
- `<p class="smallprint">Distances à vol d’oiseau, non un temps de trajet. Liste potentiellement incomplète. Pour une réaction grave, appelle les secours avant tout déplacement.</p>`+
+ (safety.verified?`<details><summary>🗺️ Autres établissements dans Plans</summary><div class="safety-quicklinks">${appLinks.map(([q,t])=>`<a class="btn secondary small" href="${appleSafetySearch(q)}" target="_blank" rel="noopener noreferrer">${t}</a>`).join('')}</div></details>`:'')+
+ `<p class="smallprint">Distances à vol d’oiseau. Liste non exhaustive. Si la situation est grave, appelle les secours sans attendre.</p>`+
  `</section>`;
 }
 
@@ -786,7 +815,7 @@ function buildQuestion(){
  const title=nearMode?`📍 ${item?item[2]:'Autour de moi'}`:`${s.from} → ${s.to}`;
  return header('Sans crédit API','💬 Questions prêtes pour ChatGPT',title)+`<section class="card"><h2>Choisis une question</h2><p class="smallprint">Une question adaptée au ${nearMode?'thème sélectionné':'transport de cette étape'} suffit. Elle est préparée avec ${nearMode?'tes coordonnées GPS':'les détails du segment'}.</p>${qs.map((q,i)=>`<button type="button" class="btn ghost questionbtn ${state.questionSelected===i?'selected':''}" data-suggest="${i}" aria-pressed="${state.questionSelected===i?'true':'false'}">${state.questionSelected===i?'✓':'💬'} ${esc(q)}</button>`).join('')}<div class="divider"></div><label for="freeQuestion">✍️ Ou écris ta propre question</label><textarea class="field" id="freeQuestion" rows="2" placeholder="Ex. Je cherche l'option la moins chère sans changer trois fois de transport…">${esc(state.questionFree)}</textarea><button class="btn secondary wide" id="prepareFreeQuestion" style="margin-top:8px">Préparer ma question libre</button><div class="divider"></div><p class="callout">${esc(state.questionSelected===-1?state.questionFree.trim():qs[state.questionSelected]||"Question prête")}</p><textarea id="questionText" tabindex="-1" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0">${esc(state.questionText)}</textarea><div class="actions"><button class="btn teal" id="copyQuestion">📋 Copier</button><a class="btn secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Ouvrir ChatGPT ↗</a></div><p class="question-tip">Choisis, copie, puis colle dans ChatGPT.</p></section><button class="btn ghost" data-tab="${nearMode?'proche':'etapes'}">← Retour</button>`;
 }
-function buildReglages(){return header('Paramètres','⚙️ Réglages','Les fonctions gratuites restent disponibles sans clé ni abonnement supplémentaire.')+`<section class="card"><h2>💸 Maîtriser les coûts API</h2><div class="callout">Google Maps, Archives, GPS et questions via ton ChatGPT personnel ne consomment pas de crédits API LudoPilot.</div><label class="line-check"><input type="checkbox" id="paidAllowed" ${state.paidAllowed?'checked':''}><span><strong>Autoriser les recherches intelligentes payantes</strong><br><span class="smallprint">Désactivé par défaut. Une confirmation sera également demandée avant chaque recherche.</span></span></label>${field('worker','Adresse du moteur Cloudflare (facultatif)',state.worker,'https://…workers.dev','url')}<p class="smallprint">Ne saisis jamais de clé secrète OpenAI ou Google dans ce site public. Un Worker partagé publiquement devrait être protégé côté serveur contre les appels non autorisés.</p><button class="btn secondary" id="saveWorker">Enregistrer cette adresse</button></section><section class="card"><h2>📂 Archives</h2><div class="actions"><button class="btn secondary" id="export">Exporter JSON</button><button class="btn ghost" id="importButton">Importer JSON</button></div><input id="importFile" type="file" accept=".json,application/json" hidden><p class="smallprint">Les sauvegardes restent sur cet appareil. Tu peux les exporter vers Fichiers ou iCloud.</p></section><section class="card"><h2>📴 Mode hors connexion</h2><p class="smallprint">Les voyages et les fiches d’urgence enregistrés sont consultables hors ligne après chargement de l'application. Les cartes en ligne, les suggestions de lieux, les recherches et ChatGPT nécessitent Internet. Vérifie toujours les horaires des ferries, bus et vols.</p></section><p class="smallprint">LudoPilot Voyages V1.15 · Site GitHub Pages · Données personnelles stockées localement.</p>`;}
+function buildReglages(){return header('Paramètres','⚙️ Réglages','Les fonctions gratuites restent disponibles sans clé ni abonnement supplémentaire.')+`<section class="card"><h2>💸 Maîtriser les coûts API</h2><div class="callout">Google Maps, Archives, GPS et questions via ton ChatGPT personnel ne consomment pas de crédits API LudoPilot.</div><label class="line-check"><input type="checkbox" id="paidAllowed" ${state.paidAllowed?'checked':''}><span><strong>Autoriser les recherches intelligentes payantes</strong><br><span class="smallprint">Désactivé par défaut. Une confirmation sera également demandée avant chaque recherche.</span></span></label>${field('worker','Adresse du moteur Cloudflare (facultatif)',state.worker,'https://…workers.dev','url')}<p class="smallprint">Ne saisis jamais de clé secrète OpenAI ou Google dans ce site public. Un Worker partagé publiquement devrait être protégé côté serveur contre les appels non autorisés.</p><button class="btn secondary" id="saveWorker">Enregistrer cette adresse</button></section><section class="card"><h2>📂 Archives</h2><div class="actions"><button class="btn secondary" id="export">Exporter JSON</button><button class="btn ghost" id="importButton">Importer JSON</button></div><input id="importFile" type="file" accept=".json,application/json" hidden><p class="smallprint">Les sauvegardes restent sur cet appareil. Tu peux les exporter vers Fichiers ou iCloud.</p></section><section class="card"><h2>📴 Mode hors connexion</h2><p class="smallprint">Les voyages et les fiches d’urgence enregistrés sont consultables hors ligne après chargement de l'application. Les cartes en ligne, les suggestions de lieux, les recherches et ChatGPT nécessitent Internet. Vérifie toujours les horaires des ferries, bus et vols.</p></section><p class="smallprint">LudoPilot Voyages V1.16 · Site GitHub Pages · Données personnelles stockées localement.</p>`;}
 function render(){const app=byId('app');app.innerHTML=({voyage:buildVoyage,etapes:buildEtapes,archives:buildArchives,proche:buildProche,aide:buildAide,chauffeur:buildChauffeur,question:buildQuestion,reglages:buildReglages}[state.tab]||buildVoyage)();document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.tab));if(app.querySelector('[data-money]')){updateMoneyNodes();ensureFxRates();}}
 function createJourney(){const d={...state.form,origin:state.form.origin.trim(),destination:state.form.destination.trim()};if(!d.origin||!d.destination){toast('Indique le départ et l’arrivée.');return;}const t=newTrip(d);state.trips.unshift(t);state.activeId=t.id;save();setTab('etapes');toast('Voyage enregistré. Ajoute ses étapes.');}
 function addSegment(){const t=active();if(!t)return;const from=byId('segFrom')?.value.trim(),to=byId('segTo')?.value.trim();if(!from||!to){toast('Indique les deux lieux de l’étape.');return;}if(from.toLowerCase()===to.toLowerCase()){toast('Départ et arrivée identiques.');return;}if(t.segments.length>=16){toast('Maximum 16 segments.');return;}const prev=t.segments.at(-1);if(prev&&prev.to.trim().toLowerCase()!==from.toLowerCase()&&!confirm('Correspondance non raccordée avec l’étape précédente. Continuer ?'))return;t.segments.push(normalizeSegment({from,to,mode:byId('segMode').value,service:byId('segService').value.trim(),notes:byId('segNotes').value.trim()},t.segments.length));save();render();toast('Étape enregistrée.');}
