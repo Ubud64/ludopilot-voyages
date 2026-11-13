@@ -109,7 +109,7 @@ nav button .icon{font-size:26px}
 </style>
 </head>
 <body>
-<header class="top"><div class="top-line"><div><div class="brand">🧭 LudoPilot <span style="color:#66d7cf">Voyages</span></div><div class="subbrand">V1.21 · SIMPLE ET ÉCONOMIQUE</div></div></div></header>
+<header class="top"><div class="top-line"><div><div class="brand">🧭 LudoPilot <span style="color:#66d7cf">Voyages</span></div><div class="subbrand">V1.22 · SAC & AIDE-MOI</div></div></div></header>
 <main id="app"></main>
 <nav id="tabs" aria-label="Navigation"><button data-tab="sac"><span class="icon">🎒</span>Sac</button><button data-tab="aide"><span class="icon">🆘</span>Aide-moi</button></nav>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -666,6 +666,16 @@ function emergencyCurrentText(){
  return {local:lng.lang==='fr'?fr:(translated?emergencyMessage.customLocal.trim():''),fr,
   label:lng.label,ok:lng.lang==='fr'||(translated&&!!emergencyMessage.customLocal.trim())};
 }
+// Le numéro principal suit la situation : accident = ambulance, danger = police.
+// Ne jamais envoyer un blessé à la police par défaut en Thaïlande.
+function emergencyNumbersBySituation(entries,mode){
+ const list=Array.isArray(entries)?entries.slice():[];
+ if(list.length<2)return list;
+ const goal=mode==='agression'?/police/i:mode==='medical'?/ambulance|samu|médic|medical|hospital/i:/urgence|urgenc|secours|emergency/i;
+ const idx=list.findIndex(([label])=>goal.test(label));
+ if(idx>0)list.unshift(list.splice(idx,1)[0]);
+ return list;
+}
 function buildEmergencyMessages(emergency,allerg){
  const msg=emergencyCurrentText(),mode=emergencyMessage.mode,custom=mode==='personnel';
  const primary=emergency.length?emergency[0]:null;
@@ -832,7 +842,7 @@ function loadSafetyFromGps(){
  },err=>{
   if(request!==safety.reqId)return;
   safety.busy=false;safety.verified=false;safety.all=[];
-  const msg=err.code===1?'Autorise la localisation pour trouver les secours.':'GPS indisponible.';if(!showLastSafetySnapshot(msg))safety.error=msg;render();
+  const msg=err.code===1?'Accès GPS refusé. Sur iPhone, autorise la localisation de LudoPilot dans Réglages, puis touche « Activer ma localisation ».':'GPS indisponible. Touche « Activer ma localisation » pour réessayer.';if(!showLastSafetySnapshot(msg))safety.error=msg;render();
  },{enableHighAccuracy:true,timeout:14000,maximumAge:0});
 }
 async function updateSafetyPlaces(lat,lon,accuracy){
@@ -1036,13 +1046,15 @@ function buildAide(){
  const current=COUNTRY[safety.countryCode]||COUNTRY.OTHER;
  const title=safety.verified?`${safety.city?safety.city+' · ':''}${safety.countryName||current.label}`:
   (safety.busy||safety.loading?'📍 Localisation en cours…':'Pays non confirmé');
- const emergency=safety.verified?current.emergencies:[];
+ const emergency=safety.verified?emergencyNumbersBySituation(current.emergencies,emergencyMessage.mode):[];
  const first=safetyPhrases();const allerg=first[1]?.find(x=>/allerg|piqûres/i.test(x[1]))?.[0]||'I am allergic to bee and wasp stings.';
  const appLinks=[['hospital emergency room','🏥 Hôpitaux'],['medical clinic','🚑 Cliniques'],['pharmacy','💊 Pharmacies'],['police station','👮 Police']];
  return header('Secours en voyage','🆘 Aide-moi',title)+
  buildEmergencyMessages(emergency,safety.verified?allerg:'')+
  `<section class="card"><h2>📍 Secours à proximité</h2>`+
- (safety.busy||safety.loading?'<p class="subtitle">📍 Recherche automatique en cours…</p>':'')+
+ (safety.busy||safety.loading?'<p class="subtitle" role="status">📍 Localisation et recherche en cours…</p>':
+  `<button type="button" class="btn teal wide" id="activateSafetyGps">${safety.verified?'📍 Actualiser ma position':'📍 Activer ma localisation'}</button>`)+
+ (!safety.verified&&!safety.busy&&!safety.loading?'<p class="smallprint">Appuie ici pour autoriser le GPS sur ton iPhone et lancer automatiquement la recherche des secours.</p>':'')+
  (safety.all.length?`<p class="smallprint">${safety.verified?safety.all.length+' lieux · '+safetyOrderingLabel():'⚠️ Ancienne position enregistrée : ne pas l’utiliser pour un trajet.'}</p>`+safetyPlaceList(displayedSafetyPlaces()):'')+
  (safety.error?`<p class="callout warning" role="status">${esc(safety.error)}</p>`:'')+
  (!safety.loading&&!safety.busy&&!safety.all.length&&!safety.error?'<p class="callout warning">Aucun établissement trouvé dans la recherche. Ouvre Plans ou appelle les secours.</p>':'')+
@@ -1185,7 +1197,7 @@ byId('app').addEventListener('click',async e=>{const b=e.target.closest('button'
   const msg=emergencyCurrentText();if(msg.local)await copyText(msg.local);return;
  }
 if(b.dataset.tab){setTab(b.dataset.tab);return;}if(b.dataset.place){const box=byId('suggest-'+b.dataset.place),f=box?._features?.[Number(b.dataset.idx)];if(!f)return;const p=f.properties||{};const label=[p.name,p.street,p.city||p.county,p.state,p.country].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).join(', ');state.form[b.dataset.place]=label;byId(b.dataset.place).value=label;box.style.display='none';save();return;}if(b.dataset.choose!==undefined){const t=active();if(t){t.currentIndex=Number(b.dataset.choose);t.complete=false;save();render();}return;}if(b.dataset.load){state.activeId=b.dataset.load;save();setTab('etapes');return;}if(b.dataset.rename){const t=state.trips.find(x=>x.id===b.dataset.rename);if(t){const n=prompt('Nom du voyage',t.name||t.destination);if(n!==null&&n.trim()){t.name=n.trim().slice(0,80);save();render();}}return;}if(b.dataset.clone){const t=state.trips.find(x=>x.id===b.dataset.clone);if(t){const copy=JSON.parse(JSON.stringify(t));copy.id=uid();copy.name=(t.name||t.destination)+' (copie)';copy.created=new Date().toISOString();state.trips.unshift(copy);state.activeId=copy.id;save();render();toast('Copie ajoutée aux archives.');}return;}if(b.dataset.driver!==undefined){const t=active();if(t){t.currentIndex=Number(b.dataset.driver);save();setTab('chauffeur');}return;}if(b.dataset.map!==undefined){const t=active();if(t?.segments?.[Number(b.dataset.map)])openURL(mapUrl(t.segments[Number(b.dataset.map)]));return;}if(b.dataset.question!==undefined){setQuestion(Number(b.dataset.question));return;}if(b.dataset.placeRoute){const [kind,rawIndex]=b.dataset.placeRoute.split(':');const list=kind==='near'?nearItems:displayedSafetyPlaces();const url=routeToPlace(list[Number(rawIndex)],'walking',kind);if(url)openURL(url);else toast('Itinéraire bloqué : GPS ou proximité non confirmé.');return;}if(b.dataset.near){searchNearCategory(b.dataset.near);return;}if(b.dataset.nearSuggest!==undefined){if(!nearLocation()){state.gpsError='Position GPS non disponible. Choisis à nouveau le thème pour lancer la localisation.';render();return;}setQuestion(-1,Number(b.dataset.nearSuggest));return;}if(b.dataset.suggest!==undefined){const idx=Number(b.dataset.suggest);const near=state.questionIndex<0;const q=near?(NEAR_QUESTIONS[state.selectedNear]||[])[idx]:currentSegment()?suggestedQuestions(currentSegment())[idx]:null;if(q){state.questionSelected=idx;state.questionText=near?nearbyPrompt(q):questionPrompt(currentSegment(),q);render();}return;}
-const t=active();switch(b.id){case'createJourney':updateFormFromDom();createJourney();break;case'searchJourney':await searchJourney();break;case'addSegment':addSegment();break;case'prevSegment':advance(-1);break;case'nextSegment':advance(1);break;case'mapCurrent':if(currentSegment())openURL(mapUrl(currentSegment()));break;case'copyDriver':if(currentSegment())await copyText(driverText(currentSegment()));break;case'getGPS':gps();break;case'retryNear':searchNearCategory(state.selectedNear);break;case'refreshSafety':safety.reqId++;safety.busy=false;safety.loading=false;state.gps=null;loadSafetyFromGps();break;case'shareGPS':if(!state.gps)gps();else await copyText(`Ma position GPS : https://www.google.com/maps/search/?api=1&query=${state.gps.lat},${state.gps.lon}`);break;case'showGPSmap':if(state.gps)openURL('https://www.google.com/maps/search/?api=1&query='+state.gps.lat+','+state.gps.lon);else gps(()=>openURL('https://www.google.com/maps/search/?api=1&query='+state.gps.lat+','+state.gps.lon));break;case'openNearMap':{const u=nearUrl();if(!u){state.gpsError='Position GPS non disponible. Sélectionne à nouveau le thème.';render();break;}openURL(u);break;}case'openNearApple':{const u=nearAppleUrl();if(!u){state.gpsError='Position GPS non disponible. Sélectionne à nouveau le thème.';render();break;}openURL(u);break;}case'nearQuestion':if(nearLocation())setQuestion(-1);else{state.gpsError='Sélectionne à nouveau le thème pour actualiser ta position avant ta question.';render();}break;case'prepareFreeQuestion':{const q=state.questionFree.trim();if(!q){toast('Écris d’abord ta question.');break;}if(state.questionIndex<0){if(!nearLocation()){toast('GPS expiré : choisis à nouveau le thème pour relocaliser l’iPhone.');break;}state.questionText=nearbyPrompt(q);}else if(currentSegment())state.questionText=questionPrompt(currentSegment(),q);state.questionSelected=-1;render();toast('Question libre préparée.');break;}case'copyQuestion':await copyText(state.questionText);break;case'saveWorker':saveWorker();break;case'export':downloadJson();break;case'importButton':byId('importFile')?.click();break;case'deleteTrip':if(t&&confirm('Supprimer définitivement ce voyage local ?')){state.trips=state.trips.filter(x=>x.id!==t.id);state.activeId=state.trips[0]?.id||null;save();setTab('archives');}break;}});
+const t=active();switch(b.id){case'createJourney':updateFormFromDom();createJourney();break;case'searchJourney':await searchJourney();break;case'addSegment':addSegment();break;case'prevSegment':advance(-1);break;case'nextSegment':advance(1);break;case'mapCurrent':if(currentSegment())openURL(mapUrl(currentSegment()));break;case'copyDriver':if(currentSegment())await copyText(driverText(currentSegment()));break;case'getGPS':gps();break;case'retryNear':searchNearCategory(state.selectedNear);break;case'activateSafetyGps':case'refreshSafety':safety.reqId++;safety.busy=false;safety.loading=false;state.gps=null;loadSafetyFromGps();break;case'shareGPS':if(!state.gps)gps();else await copyText(`Ma position GPS : https://www.google.com/maps/search/?api=1&query=${state.gps.lat},${state.gps.lon}`);break;case'showGPSmap':if(state.gps)openURL('https://www.google.com/maps/search/?api=1&query='+state.gps.lat+','+state.gps.lon);else gps(()=>openURL('https://www.google.com/maps/search/?api=1&query='+state.gps.lat+','+state.gps.lon));break;case'openNearMap':{const u=nearUrl();if(!u){state.gpsError='Position GPS non disponible. Sélectionne à nouveau le thème.';render();break;}openURL(u);break;}case'openNearApple':{const u=nearAppleUrl();if(!u){state.gpsError='Position GPS non disponible. Sélectionne à nouveau le thème.';render();break;}openURL(u);break;}case'nearQuestion':if(nearLocation())setQuestion(-1);else{state.gpsError='Sélectionne à nouveau le thème pour actualiser ta position avant ta question.';render();}break;case'prepareFreeQuestion':{const q=state.questionFree.trim();if(!q){toast('Écris d’abord ta question.');break;}if(state.questionIndex<0){if(!nearLocation()){toast('GPS expiré : choisis à nouveau le thème pour relocaliser l’iPhone.');break;}state.questionText=nearbyPrompt(q);}else if(currentSegment())state.questionText=questionPrompt(currentSegment(),q);state.questionSelected=-1;render();toast('Question libre préparée.');break;}case'copyQuestion':await copyText(state.questionText);break;case'saveWorker':saveWorker();break;case'export':downloadJson();break;case'importButton':byId('importFile')?.click();break;case'deleteTrip':if(t&&confirm('Supprimer définitivement ce voyage local ?')){state.trips=state.trips.filter(x=>x.id!==t.id);state.activeId=state.trips[0]?.id||null;save();setTab('archives');}break;}});
 window.addEventListener('online',()=>{if(state.tab==='voyage')render();});
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 render();
